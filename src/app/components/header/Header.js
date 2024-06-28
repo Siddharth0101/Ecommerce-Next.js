@@ -1,12 +1,16 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import HeaderDropDown from "./HeaderDropDown";
 
 const Header = () => {
   return (
-    <div className="container mx-auto">
-      <div className="fixed inset-x-0 top-0 z-50">
+    <div className="container mx-auto relative">
+      <div className="fixed inset-x-0 top-0 z-50 flex justify-between items-center">
         <SlideTabs />
+        <div className="absolute right-0">
+          <HeaderDropDown />
+        </div>
       </div>
     </div>
   );
