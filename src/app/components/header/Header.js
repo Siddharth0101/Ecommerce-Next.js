@@ -2,6 +2,8 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import HeaderDropDown from "./HeaderDropDown";
+import Search from "./Search";
+import Cart from "./Cart";
 
 const Header = () => {
   return (
@@ -10,6 +12,12 @@ const Header = () => {
         <SlideTabs />
         <div className="absolute right-20">
           <HeaderDropDown />
+        </div>
+        <div className="absolute right-80">
+          <Search />
+        </div>
+        <div className="absolute right-60">
+          <Cart />
         </div>
       </div>
     </div>

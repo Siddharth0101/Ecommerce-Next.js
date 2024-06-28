@@ -36,13 +36,22 @@ export default function HeaderDropDown() {
           }}
           className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-full left-1/2 transform -translate-x-1/2 w-48 overflow-hidden"
         >
-          <motion.li variants={itemVariants} style={{ marginBottom: "8px" }}>
+          <motion.li
+            variants={itemVariants}
+            style={{ marginBottom: "8px", padding: "8px", margin: "4px 0" }}
+          >
             <LogOut setOpen={setOpen} />
           </motion.li>
-          <motion.li variants={itemVariants} style={{ marginBottom: "8px" }}>
+          <motion.li
+            variants={itemVariants}
+            style={{ marginBottom: "8px", padding: "8px", margin: "4px 0" }}
+          >
             <Login setOpen={setOpen} />
           </motion.li>
-          <motion.li variants={itemVariants}>
+          <motion.li
+            variants={itemVariants}
+            style={{ padding: "8px", margin: "4px 0" }}
+          >
             <Register setOpen={setOpen} />
           </motion.li>
         </motion.ul>
