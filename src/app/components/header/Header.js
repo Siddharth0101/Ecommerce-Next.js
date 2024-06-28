@@ -8,7 +8,7 @@ const Header = () => {
     <div className="container mx-auto relative">
       <div className="fixed inset-x-0 top-0 z-50 flex justify-between items-center">
         <SlideTabs />
-        <div className="absolute right-0">
+        <div className="absolute right-20">
           <HeaderDropDown />
         </div>
       </div>
@@ -34,10 +34,9 @@ const SlideTabs = () => {
       className="relative mx-auto flex w-fit rounded-full border-2 border-black bg-white p-1"
     >
       <Tab setPosition={setPosition}>Home</Tab>
-      <Tab setPosition={setPosition}>Pricing</Tab>
-      <Tab setPosition={setPosition}>Features</Tab>
-      <Tab setPosition={setPosition}>Docs</Tab>
-      <Tab setPosition={setPosition}>Blog</Tab>
+      <Tab setPosition={setPosition}>Store</Tab>
+      <Tab setPosition={setPosition}>About Us</Tab>
+      <Tab setPosition={setPosition}>fun</Tab>
 
       <Cursor position={position} />
     </ul>

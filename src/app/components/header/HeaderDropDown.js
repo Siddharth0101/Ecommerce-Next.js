@@ -1,60 +1,55 @@
-import {
-  FiEdit,
-  FiChevronDown,
-  FiTrash,
-  FiShare,
-  FiPlusSquare,
-} from "react-icons/fi";
+import React, { useState } from "react";
+import { FiChevronDown } from "react-icons/fi";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import LogOut from "./LogOut";
+import { Login } from "./Login";
+import { Register } from "./Register";
+import ProfileLogo from "./ProfileLogo";
 
 export default function HeaderDropDown() {
   const [open, setOpen] = useState(false);
+
+  const handleToggle = () => {
+    setOpen((prev) => !prev);
+  };
 
   return (
     <div className="p-8 flex items-center justify-center">
       <motion.div animate={open ? "open" : "closed"} className="relative">
         <button
-          onClick={() => setOpen((pv) => !pv)}
-          className="flex items-center gap-2 px-3 py-2 rounded-md text-indigo-50 bg-indigo-500 hover:bg-indigo-500 transition-colors"
+          onClick={handleToggle}
+          className="flex items-center gap-2 px-3 py-2 rounded-full text-indigo-50 bg-indigo-500 hover:bg-indigo-500 transition-colors"
         >
-          <span className="font-medium text-sm">Post actions</span>
+          <ProfileLogo />
           <motion.span variants={iconVariants}>
             <FiChevronDown />
           </motion.span>
         </button>
-
         <motion.ul
           initial={wrapperVariants.closed}
           variants={wrapperVariants}
-          style={{ originY: "top", translateX: "-50%" }}
+          style={{
+            originY: "top",
+            translateX: "-50%",
+            margin: "10px",
+            padding: "15px",
+          }}
           className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-full left-1/2 transform -translate-x-1/2 w-48 overflow-hidden"
         >
-          <Option setOpen={setOpen} Icon={FiEdit} text="Edit" />
-          <Option setOpen={setOpen} Icon={FiPlusSquare} text="Duplicate" />
-          <Option setOpen={setOpen} Icon={FiShare} text="Share" />
-          <Option setOpen={setOpen} Icon={FiTrash} text="Remove" />
+          <motion.li variants={itemVariants} style={{ marginBottom: "8px" }}>
+            <LogOut setOpen={setOpen} />
+          </motion.li>
+          <motion.li variants={itemVariants} style={{ marginBottom: "8px" }}>
+            <Login setOpen={setOpen} />
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <Register setOpen={setOpen} />
+          </motion.li>
         </motion.ul>
       </motion.div>
     </div>
   );
 }
-
-const Option = ({ text, Icon, setOpen }) => {
-  return (
-    <motion.li
-      variants={itemVariants}
-      onClick={() => setOpen(false)}
-      className="flex items-center gap-2 w-full p-2 text-xs font-medium whitespace-nowrap rounded-md hover:bg-indigo-100 text-slate-700 hover:text-indigo-500 transition-colors cursor-pointer"
-    >
-      <motion.span variants={actionIconVariants}>
-        <Icon />
-      </motion.span>
-      <span>{text}</span>
-    </motion.li>
-  );
-};
-
 const wrapperVariants = {
   open: {
     scaleY: 1,
@@ -92,9 +87,4 @@ const itemVariants = {
       when: "afterChildren",
     },
   },
-};
-
-const actionIconVariants = {
-  open: { scale: 1, y: 0 },
-  closed: { scale: 0, y: -7 },
 };
