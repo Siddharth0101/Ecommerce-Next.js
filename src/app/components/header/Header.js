@@ -14,11 +14,14 @@ import {
 } from "react-icons/fi";
 import SearchModal from "./SearchModal";
 import SiteLogo from "./SiteLogo";
+import CountDown from "./CountDown";
+import Cart from "./Cart";
 
 export default function Header() {
   return (
     <div className="bg-gray-50 sticky top-0 z-50">
-      <div className="pt-8">
+      <div className="pt-0">
+        <CountDown />
         <FlipNav />
       </div>
     </div>
@@ -77,6 +80,7 @@ const NavLink = ({ text }) => {
 
 const NavRight = () => {
   const [openSearch, setOpenSearch] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
   return (
     <div className="flex items-center gap-4">
       <motion.button
@@ -91,10 +95,11 @@ const NavRight = () => {
         whileTap={{ scale: 0.95 }}
         className="text-gray-950 text-2xl ml-1"
       >
-        <FiShoppingCart />
+        <FiShoppingCart onClick={() => setOpenCart(true)} />
       </motion.button>
       <UserDropdown />
       <SearchModal open={openSearch} setOpen={setOpenSearch} />;
+      <Cart open={openCart} setOpen={setOpenCart} />
     </div>
   );
 };

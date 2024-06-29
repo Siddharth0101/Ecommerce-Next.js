@@ -1,9 +1,8 @@
-"use client";
-import { useAnimate, motion } from "framer-motion";
+import { useAnimate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 // NOTE: Change this date to whatever date you want to countdown to :)
-const COUNTDOWN_FROM = "2024-07-01";
+const COUNTDOWN_FROM = "2024-7-01";
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -14,18 +13,11 @@ export default function CountDown() {
   return (
     <div className="sticky left-0 right-0 top-0 z-50 w-full bg-indigo-600 px-2 py-0.5 text-white shadow-md">
       <div className="mx-auto flex w-fit max-w-5xl flex-wrap items-center justify-center gap-x-4 text-xs md:text-sm">
-        <motion.span
-          className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 0.8 } }}
-          whileHover={{
-            scale: 1.1,
-            textShadow: "0px 0px 8px rgba(255, 255, 255, 1)",
-            transition: { yoyo: Infinity, duration: 0.6 },
-          }}
-        >
-          Discount will end in
-        </motion.span>
+        <div className="flex w-fit items-center justify-center gap-1.5 py-2">
+          <span className="font-mono text-sm font-semibold md:text-base text-orange-400">
+            Hurry! Sale ends in
+          </span>
+        </div>
         <CountdownItem unit="Day" text="days" />
         <CountdownItem unit="Hour" text="hours" />
         <CountdownItem unit="Minute" text="minutes" />
@@ -42,19 +34,16 @@ const CountdownItem = ({ unit, text }) => {
       <div className="relative w-full overflow-hidden text-center">
         <span
           ref={ref}
-          className="block font-mono text-sm font-semibold md:text-base"
+          className="block font-mono text-sm font-semibold md:text-base text-white"
         >
           {time}
         </span>
       </div>
-      <span>{text}</span>
+      <span className="text-white">{text}</span>
     </div>
   );
 };
 
-// NOTE: Framer motion exit animations can be a bit buggy when repeating
-// keys and tabbing between windows. Instead of using them, we've opted here
-// to build our own custom hook for handling the entrance and exit animations
 const useTimer = (unit) => {
   const [ref, animate] = useAnimate();
 
