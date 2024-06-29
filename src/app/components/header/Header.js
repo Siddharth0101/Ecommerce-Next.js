@@ -12,12 +12,15 @@ import {
   FiLogIn,
   FiLogOut,
 } from "react-icons/fi";
+import SearchModal from "./SearchModal";
+import SiteLogo from "./SiteLogo";
 
 export default function Header() {
   return (
-    <div className="bg-gray-50">
-      <FlipNav />
-      <div className="h-0" />
+    <div className="bg-gray-50 sticky top-0 z-50">
+      <div className="pt-8">
+        <FlipNav />
+      </div>
     </div>
   );
 }
@@ -34,28 +37,6 @@ const FlipNav = () => {
   );
 };
 
-const Logo = () => {
-  return (
-    <svg
-      width="50"
-      height="39"
-      viewBox="0 0 50 39"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="fill-gray-800"
-    >
-      <path
-        d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z"
-        stopColor="#000000"
-      ></path>
-      <path
-        d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-        stopColor="#000000"
-      ></path>
-    </svg>
-  );
-};
-
 const NavLeft = ({ setIsOpen }) => {
   return (
     <div className="flex items-center gap-6">
@@ -67,7 +48,8 @@ const NavLeft = ({ setIsOpen }) => {
       >
         <FiMenu />
       </motion.button>
-      <Logo />
+      <SiteLogo />
+      {/* <Logo /> */}
       <NavLink text="Home" />
       <NavLink text="Store" />
       <NavLink text="About Us" />
@@ -94,6 +76,7 @@ const NavLink = ({ text }) => {
 };
 
 const NavRight = () => {
+  const [openSearch, setOpenSearch] = useState(false);
   return (
     <div className="flex items-center gap-4">
       <motion.button
@@ -101,7 +84,7 @@ const NavRight = () => {
         whileTap={{ scale: 0.95 }}
         className="text-gray-950 text-2xl"
       >
-        <FiSearch />
+        <FiSearch onClick={() => setOpenSearch(true)} />
       </motion.button>
       <motion.button
         whileHover={{ scale: 1.05 }}
@@ -111,6 +94,7 @@ const NavRight = () => {
         <FiShoppingCart />
       </motion.button>
       <UserDropdown />
+      <SearchModal open={openSearch} setOpen={setOpenSearch} />;
     </div>
   );
 };
