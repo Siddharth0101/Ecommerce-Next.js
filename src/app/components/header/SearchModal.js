@@ -9,13 +9,16 @@ import {
 
 export default function SearchModal({ open, setOpen }) {
   return (
-    <div className="grid  place-content-center bg-neutral-950">
+    <div className="grid place-content-center bg-neutral-950">
       <DragCloseDrawer open={open} setOpen={setOpen}>
         <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
-          <h2 className="text-4xl font-bold text-neutral-200">
-            Drag the handle at the top of this modal downwards 100px to close it
-          </h2>
-          <p>Hello There</p>
+          <div className="flex items-center justify-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="px-4 py-2 bg-neutral-800 text-neutral-200 border border-neutral-700 rounded-lg w-full max-w-xs sm:max-w-md"
+            />
+          </div>
         </div>
       </DragCloseDrawer>
     </div>
@@ -62,7 +65,7 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
             transition={{
               ease: "easeInOut",
             }}
-            className="absolute bottom-0 h-[75vh] w-full overflow-hidden rounded-t-3xl bg-neutral-900"
+            className="absolute bottom-0 left-0 right-0 h-[75vh] w-full overflow-hidden rounded-t-3xl bg-neutral-900"
             style={{ y }}
             drag="y"
             dragControls={controls}

@@ -52,7 +52,6 @@ const NavLeft = ({ setIsOpen }) => {
         <FiMenu />
       </motion.button>
       <SiteLogo />
-      {/* <Logo /> */}
       <NavLink text="Home" />
       <NavLink text="Store" />
       <NavLink text="About Us" />
@@ -221,10 +220,10 @@ const NavMenu = ({ isOpen }) => {
       animate={isOpen ? "open" : "closed"}
       className="absolute p-4 bg-white shadow-lg left-0 right-0 top-full origin-top flex flex-col gap-4"
     >
-      <MenuLink text="Solutions" />
-      <MenuLink text="Community" />
-      <MenuLink text="Pricing" />
-      <MenuLink text="Company" />
+      <MenuLink text="Home" />
+      <MenuLink text="Store" />
+      <MenuLink text="About Us" />
+      <MenuLink text="Contact Us" />
     </motion.div>
   );
 };
