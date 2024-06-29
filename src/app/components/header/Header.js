@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import {
   FiMenu,
@@ -7,6 +7,10 @@ import {
   FiSearch,
   FiShoppingCart,
   FiUser,
+  FiChevronDown,
+  FiPlusSquare,
+  FiLogIn,
+  FiLogOut,
 } from "react-icons/fi";
 
 export default function Header() {
@@ -20,6 +24,7 @@ export default function Header() {
 
 const FlipNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
       <NavLeft setIsOpen={setIsOpen} />
@@ -87,6 +92,7 @@ const NavLink = ({ text }) => {
     </a>
   );
 };
+
 const NavRight = () => {
   return (
     <div className="flex items-center gap-4">
@@ -104,15 +110,118 @@ const NavRight = () => {
       >
         <FiShoppingCart />
       </motion.button>
+      <UserDropdown />
+    </div>
+  );
+};
+
+const UserDropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    // Implement logout functionality
+    setIsOpen(false); // Close dropdown after logout
+  };
+
+  return (
+    <div className="relative">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="text-gray-950 text-2xl mr-2 ml-1"
+        className="text-gray-950 text-2xl ml-1 flex items-center gap-1"
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <FiUser />
+        <motion.span
+          variants={iconVariants}
+          animate={isOpen ? "open" : "closed"}
+          whileHover={{ scale: 1.1 }}
+        >
+          <FiChevronDown />
+        </motion.span>
       </motion.button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            initial={wrapperVariants.closed}
+            animate={wrapperVariants.open}
+            exit={wrapperVariants.closed}
+            className="absolute right-0 mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
+          >
+            <Option
+              text="Login"
+              Icon={FiLogIn}
+              onClick={() => setIsOpen(false)}
+            />
+            <Option
+              text="Register"
+              Icon={FiPlusSquare}
+              onClick={() => setIsOpen(false)}
+            />
+            <Option
+              text="Logout"
+              Icon={FiLogOut}
+              onClick={() => setIsOpen(false)}
+            />
+            <Option
+              text="Profile"
+              Icon={FiUser}
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div variants={itemVariants} />
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
+};
+
+const Option = ({ text, Icon, onClick }) => {
+  return (
+    <motion.li
+      onClick={onClick}
+      variants={itemVariants}
+      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+    >
+      <div className="flex items-center gap-2">
+        <Icon />
+        <span>{text}</span>
+      </div>
+    </motion.li>
+  );
+};
+
+const wrapperVariants = {
+  open: {
+    scaleY: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+  closed: {
+    scaleY: 0,
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  open: {
+    opacity: 1,
+    y: 0,
+  },
+  closed: {
+    opacity: 0,
+    y: -10,
+  },
+};
+
+const iconVariants = {
+  open: { rotate: 180 },
+  closed: { rotate: 0 },
 };
 
 const NavMenu = ({ isOpen }) => {
