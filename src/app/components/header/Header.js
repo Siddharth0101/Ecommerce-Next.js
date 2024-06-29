@@ -1,7 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { FiMenu, FiArrowRight } from "react-icons/fi";
+import {
+  FiMenu,
+  FiArrowRight,
+  FiSearch,
+  FiShoppingCart,
+  FiUser,
+} from "react-icons/fi";
 
 export default function Header() {
   return (
@@ -24,7 +30,6 @@ const FlipNav = () => {
 };
 
 const Logo = () => {
-  // Temp logo from https://logoipsum.com/
   return (
     <svg
       width="50"
@@ -82,23 +87,29 @@ const NavLink = ({ text }) => {
     </a>
   );
 };
-
 const NavRight = () => {
   return (
     <div className="flex items-center gap-4">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent font-medium rounded-md whitespace-nowrap"
+        className="text-gray-950 text-2xl"
       >
-        Sign in
+        <FiSearch />
       </motion.button>
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-medium rounded-md whitespace-nowrap"
+        className="text-gray-950 text-2xl ml-1"
       >
-        Sign up
+        <FiShoppingCart />
+      </motion.button>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="text-gray-950 text-2xl mr-2 ml-1"
+      >
+        <FiUser />
       </motion.button>
     </div>
   );
