@@ -64,8 +64,8 @@ const NavLeft = ({ setIsOpen }) => {
 
 const NavLink = ({ text, href }) => {
   return (
-    <a
-      href="#"
+    <Link
+      href={href || "#"}
       rel="nofollow"
       className="hidden lg:block h-[30px] overflow-hidden font-medium"
     >
@@ -75,7 +75,7 @@ const NavLink = ({ text, href }) => {
           {text}
         </span>
       </motion.div>
-    </a>
+    </Link>
   );
 };
 
@@ -221,7 +221,7 @@ const NavMenu = ({ isOpen }) => {
       animate={isOpen ? "open" : "closed"}
       className="absolute p-4 bg-white shadow-lg left-0 right-0 top-full origin-top flex flex-col gap-4"
     >
-      <MenuLink text="Home" />
+      <MenuLink text="Home" href="\" />
       <MenuLink text="Store" />
       <MenuLink text="About Us" />
       <MenuLink text="Contact Us" />
@@ -229,12 +229,12 @@ const NavMenu = ({ isOpen }) => {
   );
 };
 
-const MenuLink = ({ text }) => {
+const MenuLink = ({ text, href }) => {
   return (
-    <motion.a
+    <Link
       variants={menuLinkVariants}
       rel="nofollow"
-      href="#"
+      href={href || "#"}
       className="h-[30px] overflow-hidden font-medium text-lg flex items-start gap-2"
     >
       <motion.span variants={menuLinkArrowVariants}>
@@ -246,7 +246,7 @@ const MenuLink = ({ text }) => {
           {text}
         </span>
       </motion.div>
-    </motion.a>
+    </Link>
   );
 };
 
