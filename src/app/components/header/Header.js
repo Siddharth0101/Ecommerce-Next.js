@@ -16,6 +16,7 @@ import SearchModal from "./SearchModal";
 import SiteLogo from "./SiteLogo";
 import CountDown from "./CountDown";
 import Cart from "./Cart";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   return (
@@ -97,7 +98,7 @@ const NavRight = () => {
         <FiShoppingCart onClick={() => setOpenCart(true)} />
       </motion.button>
       <UserDropdown />
-      <SearchModal open={openSearch} setOpen={setOpenSearch} />;
+      <SearchModal open={openSearch} setOpen={setOpenSearch} />
       <Cart open={openCart} setOpen={setOpenCart} />
     </div>
   );
@@ -105,10 +106,15 @@ const NavRight = () => {
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const router = useRouter();
   const handleLogout = () => {
     // Implement logout functionality
     setIsOpen(false); // Close dropdown after logout
+  };
+
+  const handleLogIn = () => {
+    router.push("/login");
+    setIsOpen(false);
   };
 
   return (
@@ -137,26 +143,12 @@ const UserDropdown = () => {
             className="absolute right-0 mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
           >
             <Option
-              text="Login"
-              Icon={FiLogIn}
-              onClick={() => setIsOpen(false)}
-            />
-            <Option
-              text="Register"
-              Icon={FiPlusSquare}
-              onClick={() => setIsOpen(false)}
-            />
-            <Option
-              text="Logout"
-              Icon={FiLogOut}
-              onClick={() => setIsOpen(false)}
-            />
-            <Option
               text="Profile"
               Icon={FiUser}
               onClick={() => setIsOpen(false)}
             />
-            <motion.div variants={itemVariants} />
+            <Option text="Login" Icon={FiLogIn} onClick={handleLogIn} />
+            <Option text="Logout" Icon={FiLogOut} onClick={handleLogout} />
           </motion.ul>
         )}
       </AnimatePresence>
