@@ -54,7 +54,7 @@ const NavLeft = ({ setIsOpen }) => {
         <FiMenu />
       </motion.button>
       <SiteLogo />
-      <NavLink text="Home" href="/" />
+      <NavLink href="/" text="Home" />
       <NavLink text="Store" />
       <NavLink text="About Us" />
       <NavLink text="Contact Us" />
@@ -64,21 +64,18 @@ const NavLeft = ({ setIsOpen }) => {
 
 const NavLink = ({ text, href }) => {
   return (
-    <Link href={href || "#"}>
-      <span className="h-[30px] overflow-hidden font-medium text-lg flex items-start gap-2">
-        <motion.span variants={menuLinkArrowVariants}>
-          <FiArrowRight className="h-[30px] text-gray-950" />
-        </motion.span>
-        <motion.div whileHover={{ y: -30 }}>
-          <span className="flex items-center h-[30px] text-gray-500">
-            {text}
-          </span>
-          <span className="flex items-center h-[30px] text-indigo-600">
-            {text}
-          </span>
-        </motion.div>
-      </span>
-    </Link>
+    <a
+      href="#"
+      rel="nofollow"
+      className="hidden lg:block h-[30px] overflow-hidden font-medium"
+    >
+      <motion.div whileHover={{ y: -30 }}>
+        <span className="flex items-center h-[30px] text-gray-500">{text}</span>
+        <span className="flex items-center h-[30px] text-indigo-600">
+          {text}
+        </span>
+      </motion.div>
+    </a>
   );
 };
 
