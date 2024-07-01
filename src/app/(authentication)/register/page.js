@@ -18,7 +18,7 @@ export default function Register() {
   }
   return (
     <div>
-      <div class="flex flex-col items-center justify-center dark mt-6">
+      <div class="flex flex-col items-center justify-center dark mt-6 mb-6">
         <div class="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
           <h2 class="text-2xl font-bold text-gray-200 mb-4">Sign Up</h2>
           <form class="flex flex-col">

@@ -43,7 +43,6 @@ export default function Home3() {
   return (
     <section className="bg-slate-100" ref={ref}>
       <div className="relative overflow-hidden p-4">
-        
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-2xl font-semibold">
             Everything. <span className="text-slate-500">Yes, even that.</span>
@@ -60,7 +59,6 @@ export default function Home3() {
           </motion.div>
         </div>
 
-       
         <>
           <motion.button
             initial={false}

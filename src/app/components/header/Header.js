@@ -111,6 +111,10 @@ const UserDropdown = () => {
   const handleLogout = () => {
     setIsOpen(false);
   };
+  const handleProfile = () => {
+    router.push("/profile");
+    setIsOpen(false);
+  };
 
   const handleLogIn = () => {
     router.push("/login");
@@ -145,11 +149,7 @@ const UserDropdown = () => {
             exit={wrapperVariants.closed}
             className="absolute right-0 mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
           >
-            <Option
-              text="Profile"
-              Icon={FiUser}
-              onClick={() => setIsOpen(false)}
-            />
+            <Option text="Profile" Icon={FiUser} onClick={handleProfile} />
             <Option text="Login" Icon={FiLogIn} onClick={handleLogIn} />
             <Option
               text="Register"
