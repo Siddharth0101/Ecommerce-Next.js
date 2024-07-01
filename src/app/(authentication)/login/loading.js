@@ -4,7 +4,6 @@ const Loader = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-500">
       <div className="flex flex-col items-center justify-end w-48 h-24 relative overflow-hidden">
-        {/* Truck Body */}
         <div className="w-32 h-auto mb-1.5 animate-motion">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +71,7 @@ const Loader = () => {
             ></rect>
           </svg>
         </div>
-        {/* Truck Tires */}
+
         <div className="flex items-center justify-between w-32 h-auto absolute bottom-0 px-2.5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,12 +106,11 @@ const Loader = () => {
             <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
           </svg>
         </div>
-        {/* Road */}
+
         <div className="relative w-full h-0.5 bg-gray-900 rounded-sm">
           <div className="absolute w-5 h-full bg-gray-900 right-[-50%] rounded-sm animate-roadAnimation border-l-4 border-white"></div>
           <div className="absolute w-2.5 h-full bg-gray-900 right-[-65%] rounded-sm animate-roadAnimation border-l-2 border-white"></div>
         </div>
-        {/* Lamp Post */}
         <svg
           xmlSpace="preserve"
           viewBox="0 0 453.459 453.459"

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 const Loader = () => {
   const [randomQuote, setRandomQuote] = useState("");
 
-  // Array of quotes
   const quotes = [
     "Discover the story behind our commitment to quality and health.",
     "Learn about our passion for providing the best nuts for your enjoyment.",
@@ -13,13 +12,11 @@ const Loader = () => {
     "Join us in celebrating nature's bounty through our finest nut selections.",
   ];
 
-  // Function to get a random quote
   const getRandomQuote = () => {
     return quotes[Math.floor(Math.random() * quotes.length)];
   };
 
   useEffect(() => {
-    // Set a random quote when the component mounts
     setRandomQuote(getRandomQuote());
   }, []);
 

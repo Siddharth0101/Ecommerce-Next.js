@@ -23,9 +23,9 @@ export default function Cart({ open, setOpen }) {
 
 const DragCloseDrawer = ({ open, setOpen, children }) => {
   const [scope, animate] = useAnimate();
-  const [drawerRef, { width }] = useMeasure(); // Use width for positioning
+  const [drawerRef, { width }] = useMeasure();
 
-  const x = useMotionValue(0); // Use x instead of y for horizontal dragging
+  const x = useMotionValue(0);
   const controls = useDragControls();
 
   const handleClose = async () => {
@@ -56,14 +56,14 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
             id="drawer"
             ref={drawerRef}
             onClick={(e) => e.stopPropagation()}
-            initial={{ x: "100%" }} // Initial position from right
-            animate={{ x: "0%" }} // Animation to center from right
+            initial={{ x: "100%" }}
+            animate={{ x: "0%" }}
             transition={{
               ease: "easeInOut",
             }}
-            className="absolute top-0 right-0 h-full w-[75%] max-w-[500px] overflow-hidden rounded-l-3xl bg-neutral-900" // Adjust width and styling as needed
+            className="absolute top-0 right-0 h-full w-[75%] max-w-[500px] overflow-hidden rounded-l-3xl bg-neutral-900"
             style={{ x }}
-            drag="x" // Drag horizontally
+            drag="x"
             dragControls={controls}
             onDragEnd={() => {
               if (x.get() >= 100) {
@@ -80,7 +80,6 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
               right: 0.5,
             }}
           >
-            {/* Handle button and content */}
             <div className="absolute top-0 bottom-0 left-0 z-10 flex justify-center bg-neutral-900 p-4">
               <button
                 onPointerDown={(e) => {

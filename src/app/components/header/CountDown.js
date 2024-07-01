@@ -1,7 +1,6 @@
 import { useAnimate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-// NOTE: Change this date to whatever date you want to countdown to :)
 const COUNTDOWN_FROM = "2024-11-01";
 
 const SECOND = 1000;
@@ -76,7 +75,6 @@ const useTimer = (unit) => {
     }
 
     if (newTime !== timeRef.current) {
-      // Exit animation
       await animate(
         ref.current,
         { y: ["0%", "-50%"], opacity: [1, 0] },
@@ -86,7 +84,6 @@ const useTimer = (unit) => {
       timeRef.current = newTime;
       setTime(newTime);
 
-      // Enter animation
       await animate(
         ref.current,
         { y: ["50%", "0%"], opacity: [0, 1] },

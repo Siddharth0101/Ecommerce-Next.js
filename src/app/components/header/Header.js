@@ -109,8 +109,7 @@ const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const handleLogout = () => {
-    // Implement logout functionality
-    setIsOpen(false); // Close dropdown after logout
+    setIsOpen(false);
   };
 
   const handleLogIn = () => {
