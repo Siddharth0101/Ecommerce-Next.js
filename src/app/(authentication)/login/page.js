@@ -1,7 +1,22 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import React from "react";
+import Loading from "./loading";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex justify-center mt-14">
       <div

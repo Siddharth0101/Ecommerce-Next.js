@@ -1,6 +1,21 @@
+"use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import Loader from "./loading";
 
 export default function Register() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div>
       <div class="flex flex-col items-center justify-center dark mt-6">
