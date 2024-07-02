@@ -127,11 +127,11 @@ export default function Register() {
       }
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setNotification({
           id: Math.random(),
           text: "Registration successful.",
         });
+        UpdateProfile(data);
       }
     } catch (error) {
       setNotification({
@@ -140,6 +140,25 @@ export default function Register() {
       });
     }
   };
+  async function UpdateProfile(data) {
+    try {
+      const response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDxycgQJ4R3MwnpWkQRpV-tkmBmApAPuCA",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idToken: data.idToken,
+            displayName: `${firstNameRef.current.value} ${lastNameRef.current.value}`,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      // console.log(responseData);
+    } catch (error) {}
+  }
 
   if (isLoading) {
     return <Loader />;
