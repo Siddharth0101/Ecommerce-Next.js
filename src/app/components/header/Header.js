@@ -18,6 +18,8 @@ import CountDown from "./CountDown";
 import Cart from "./Cart";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { TokenSliceActions } from "@/app/store/tokenSlice";
 
 export default function Header() {
   return (
@@ -108,7 +110,11 @@ const NavRight = () => {
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isLogged = useSelector((state) => state.token.isLogged);
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(TokenSliceActions.LOGOUT());
     setIsOpen(false);
   };
   const handleProfile = () => {
@@ -149,7 +155,9 @@ const UserDropdown = () => {
             exit={wrapperVariants.closed}
             className="absolute right-0 mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
           >
-            <Option text="Profile" Icon={FiUser} onClick={handleProfile} />
+            {isLogged && (
+              <Option text="Profile" Icon={FiUser} onClick={handleProfile} />
+            )}
             <Option text="Login" Icon={FiLogIn} onClick={handleLogIn} />
             <Option
               text="Register"

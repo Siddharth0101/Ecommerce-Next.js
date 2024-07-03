@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Loading from "./loading";
 import StackedNotifications from "@/app/components/alert/alert";
+import { useDispatch } from "react-redux";
+import { TokenSliceActions } from "@/app/store/tokenSlice";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,6 +12,7 @@ const Login = () => {
   const [notification, setNotification] = useState(null);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -53,6 +56,9 @@ const Login = () => {
       );
       const responseData = await response.json();
       // console.log(responseData);
+      dispatch(TokenSliceActions.DISPLAYNAME(responseData.displayName));
+      dispatch(TokenSliceActions.LOGIN());
+      localStorage.setItem("token", responseData.idToken);
 
       if (!response.ok) {
         if (response.status == 400) {

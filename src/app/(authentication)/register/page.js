@@ -29,74 +29,60 @@ export default function Register() {
     setNotification(null);
   };
 
+  const validateInputs = () => {
+    if (firstNameRef.current.value === "") {
+      return "First Name is required!";
+    }
+    if (lastNameRef.current.value === "") {
+      return "Last Name is required!";
+    }
+    if (emailRef.current.value === "") {
+      return "Email is required!";
+    }
+    if (confirmEmailRef.current.value === "") {
+      return "Confirm Email is required!";
+    }
+    if (emailRef.current.value !== confirmEmailRef.current.value) {
+      return "Emails do not match!";
+    }
+    if (passwordRef.current.value === "") {
+      return "Password is required!";
+    }
+    if (confirmPassRef.current.value === "") {
+      return "Confirm Password is required!";
+    }
+    if (passwordRef.current.value !== confirmPassRef.current.value) {
+      return "Passwords do not match!";
+    }
+    if (passwordRef.current.value.length < 8) {
+      return "Password must be at least 8 characters long!";
+    }
+    if (passwordRef.current.value.search(/[a-z]/) < 0) {
+      return "Password must contain at least one lowercase letter!";
+    }
+    if (passwordRef.current.value.search(/[A-Z]/) < 0) {
+      return "Password must contain at least one uppercase letter!";
+    }
+    if (passwordRef.current.value.search(/[0-9]/) < 0) {
+      return "Password must contain at least one number!";
+    }
+    if (passwordRef.current.value.search(/[@]/) < 0) {
+      return "Password must contain the '@' symbol!";
+    }
+    return null;
+  };
+
   const signUpHandler = async (e) => {
     e.preventDefault();
-    if (firstNameRef.current.value === "") {
+    const errorMessage = validateInputs();
+    if (errorMessage) {
       setNotification({
         id: Math.random(),
-        text: "First Name is required!",
+        text: errorMessage,
       });
-    } else if (lastNameRef.current.value === "") {
-      setNotification({
-        id: Math.random(),
-        text: "Last Name is required!",
-      });
-    } else if (emailRef.current.value === "") {
-      setNotification({
-        id: Math.random(),
-        text: "Email is required!",
-      });
-    } else if (confirmEmailRef.current.value === "") {
-      setNotification({
-        id: Math.random(),
-        text: "Confirm Email is required!",
-      });
-    } else if (emailRef.current.value !== confirmEmailRef.current.value) {
-      setNotification({
-        id: Math.random(),
-        text: "Emails do not match!",
-      });
-    } else if (passwordRef.current.value === "") {
-      setNotification({
-        id: Math.random(),
-        text: "Password is required!",
-      });
-    } else if (confirmPassRef.current.value === "") {
-      setNotification({
-        id: Math.random(),
-        text: "Confirm Password is required!",
-      });
-    } else if (passwordRef.current.value !== confirmPassRef.current.value) {
-      setNotification({
-        id: Math.random(),
-        text: "Passwords do not match!",
-      });
-    } else if (passwordRef.current.value.length < 8) {
-      setNotification({
-        id: Math.random(),
-        text: "Password must be at least 8 characters long!",
-      });
-    } else if (passwordRef.current.value.search(/[a-z]/) < 0) {
-      setNotification({
-        id: Math.random(),
-        text: "Password must contain at least one lowercase letter!",
-      });
-    } else if (passwordRef.current.value.search(/[A-Z]/) < 0) {
-      setNotification({
-        id: Math.random(),
-        text: "Password must contain at least one uppercase letter!",
-      });
-    } else if (passwordRef.current.value.search(/[0-9]/) < 0) {
-      setNotification({
-        id: Math.random(),
-        text: "Password must contain at least one number!",
-      });
-    } else if (passwordRef.current.value.search(/[@]/) < 0) {
-      setNotification({
-        id: Math.random(),
-        text: "Password must contain the '@' symbol!",
-      });
+      return;
     }
+
     try {
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDxycgQJ4R3MwnpWkQRpV-tkmBmApAPuCA",
@@ -112,27 +98,23 @@ export default function Register() {
         }
       );
       if (!response.ok) {
-        if (response.status === 400) {
-          setNotification({
-            id: Math.random(),
-            text: "Email already exists.",
-          });
-        } else {
-          setNotification({
-            id: Math.random(),
-            text: "Something went wrong.",
-          });
-        }
-        return;
-      }
-      if (response.ok) {
-        const data = await response.json();
+        const message =
+          response.status === 400
+            ? "Email already exists."
+            : "Something went wrong.";
         setNotification({
           id: Math.random(),
-          text: "Registration successful.",
+          text: message,
         });
-        UpdateProfile(data);
+        return;
       }
+
+      const data = await response.json();
+      setNotification({
+        id: Math.random(),
+        text: "Registration successful.",
+      });
+      UpdateProfile(data);
     } catch (error) {
       setNotification({
         id: Math.random(),
@@ -140,9 +122,10 @@ export default function Register() {
       });
     }
   };
+
   async function UpdateProfile(data) {
     try {
-      const response = await fetch(
+      await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDxycgQJ4R3MwnpWkQRpV-tkmBmApAPuCA",
         {
           method: "POST",
@@ -155,14 +138,15 @@ export default function Register() {
           }),
         }
       );
-      const responseData = await response.json();
-      // console.log(responseData);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   }
 
   if (isLoading) {
     return <Loader />;
   }
+
   return (
     <div>
       <StackedNotifications
