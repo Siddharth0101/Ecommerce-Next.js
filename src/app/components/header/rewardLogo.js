@@ -15,7 +15,7 @@ export default function RewardLogo({ amount }) {
           {amount}
         </div>
         <div className="text-xs sm:text-sm text-gray-800 font-semibold">
-          Your Reward
+          Your Coins
         </div>
       </div>
     </div>
