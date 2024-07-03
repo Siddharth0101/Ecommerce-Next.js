@@ -17,5 +17,10 @@ export default function Login() {
   if (isLoading) {
     return <Loader />;
   }
-  return <div>Profile Page</div>;
+  return (
+    <div>
+      Profile Page
+      {displayName}--{}
+    </div>
+  );
 }

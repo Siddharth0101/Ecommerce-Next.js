@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "@/app/store/tokenSlice";
+import RewardLogo from "./rewardLogo";
 
 export default function Header() {
   return (
@@ -38,6 +39,7 @@ const FlipNav = () => {
   return (
     <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
       <NavLeft setIsOpen={setIsOpen} />
+
       <NavRight />
       <NavMenu isOpen={isOpen} />
     </nav>
@@ -86,6 +88,7 @@ const NavRight = () => {
   const [openCart, setOpenCart] = useState(false);
   return (
     <div className="flex items-center gap-4">
+      <RewardLogo amount="100" />
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -158,13 +161,19 @@ const UserDropdown = () => {
             {isLogged && (
               <Option text="Profile" Icon={FiUser} onClick={handleProfile} />
             )}
-            <Option text="Login" Icon={FiLogIn} onClick={handleLogIn} />
-            <Option
-              text="Register"
-              Icon={FiPlusSquare}
-              onClick={handleRegister}
-            />
-            <Option text="Logout" Icon={FiLogOut} onClick={handleLogout} />
+            {!isLogged && (
+              <Option text="Login" Icon={FiLogIn} onClick={handleLogIn} />
+            )}
+            {!isLogged && (
+              <Option
+                text="Register"
+                Icon={FiPlusSquare}
+                onClick={handleRegister}
+              />
+            )}
+            {isLogged && (
+              <Option text="Logout" Icon={FiLogOut} onClick={handleLogout} />
+            )}
           </motion.ul>
         )}
       </AnimatePresence>

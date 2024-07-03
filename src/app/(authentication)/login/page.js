@@ -33,12 +33,14 @@ const Login = () => {
         id: Math.random(),
         text: "Email field is empty",
       });
+      return;
     }
     if (passwordRef.current.value === "") {
       setNotification({
         id: Math.random(),
         text: "Password field is empty",
       });
+      return;
     }
     try {
       const response = await fetch(
@@ -55,25 +57,25 @@ const Login = () => {
         }
       );
       const responseData = await response.json();
-      // console.log(responseData);
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          setNotification({
+            id: Math.random(),
+            text: "Wrong credentials. Please check your email and password.",
+          });
+        }
+        return;
+      }
+
       dispatch(TokenSliceActions.DISPLAYNAME(responseData.displayName));
       dispatch(TokenSliceActions.LOGIN());
       localStorage.setItem("token", responseData.idToken);
 
-      if (!response.ok) {
-        if (response.status == 400) {
-          setNotification({
-            id: Math.random(),
-            text: "Something went wrong.",
-          });
-        }
-      }
-      if (response.ok) {
-        setNotification({
-          id: Math.random(),
-          text: "Login successful! Welcome back.",
-        });
-      }
+      setNotification({
+        id: Math.random(),
+        text: "Login successful! Welcome back.",
+      });
     } catch (error) {
       setNotification({
         id: Math.random(),
@@ -81,6 +83,7 @@ const Login = () => {
       });
     }
   };
+
   if (isLoading) {
     return <Loading />;
   }
