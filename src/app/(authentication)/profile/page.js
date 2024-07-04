@@ -30,6 +30,7 @@ export default function Profile() {
 
   const handleIconClick = (platform) => {
     alert(`Clicked on ${platform}`);
+    console.log("clieckddddddd");
   };
 
   const handleSave = () => {
@@ -219,18 +220,23 @@ export default function Profile() {
 }
 
 function SocialIcon({ platform, icon, onClick }) {
+  const handleClick = () => {
+    onClick(platform); // Pass the platform name when clicked
+  };
+
   return (
     <motion.div
       className="relative p-2 rounded-full shadow-lg overflow-hidden"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
+      onClick={handleClick} // Ensure onClick is applied to the clickable area
     >
       <div className="relative bg-gradient-to-r from-purple-400 to-indigo-600 rounded-full group overflow-hidden">
         <FontAwesomeIcon
           icon={icon}
           className="text-3xl text-white cursor-pointer m-4"
           title={platform}
-          onClick={() => onClick(platform)}
+          onClick={handleClick} // Handle click directly on the icon as well
         />
         <motion.div
           className="absolute inset-0 bg-blue-900 opacity-0 rounded-full"
