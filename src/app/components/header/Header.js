@@ -53,16 +53,84 @@ const NavLeft = ({ setIsOpen }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="block lg:hidden text-gray-950 text-2xl"
-        onClick={() => setIsOpen((pv) => !pv)}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <FiMenu />
       </motion.button>
       <SiteLogo />
       <NavLink href="/" text="Home" />
-      <NavLink href="/store" text="Store" />
+      <div className="relative">
+        <NavLinkWithDropdown text="Store">
+          <StoreDropdown />
+        </NavLinkWithDropdown>
+      </div>
       <NavLink href="/about" text="About Us" />
       <NavLink href="/contact" text="Contact Us" />
     </div>
+  );
+};
+
+const NavLinkWithDropdown = ({ text, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+        className="h-[30px] overflow-hidden font-medium lg:block flex items-center gap-2 relative text-gray-600"
+      >
+        <span className="flex items-center h-[30px]">{text}</span>
+        <FiChevronDown className="text-gray-500" />
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const StoreDropdown = () => {
+  return (
+    <>
+      <DropdownItem text="Almond" href="/store/category1" />
+      <DropdownItem text="Cashew" href="/store/category2" />
+    </>
+  );
+};
+
+const DropdownItem = ({ text, href }) => {
+  return (
+    <Link href={href}>
+      <motion.a
+        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer font-medium"
+        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.2 }}
+        style={{ fontFamily: "Inter, sans-serif" }}
+      >
+        {text}
+      </motion.a>
+    </Link>
   );
 };
 

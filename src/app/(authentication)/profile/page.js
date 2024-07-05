@@ -13,24 +13,29 @@ import {
   faLinkedin,
   faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
+import StackedNotifications from "@/app/components/alert/alert";
 
 export default function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const displayName = useSelector((state) => state.token.displayName);
-  const email = useSelector((state) => state.token.email); // Assuming email is also stored in the state
+  const email = useSelector((state) => state.token.email);
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [notification, setNotification] = useState(null);
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
-
+  const removeNotif = () => {
+    setNotification(null);
+  };
   const handleIconClick = (platform) => {
-    alert(`Clicked on ${platform}`);
-    console.log("clieckddddddd");
+    setNotification({
+      id: Math.random(),
+      text: `Successfully followed ${platform} and added 100 coins to your wallet.`,
+    });
   };
 
   const handleSave = () => {
@@ -54,6 +59,10 @@ export default function Profile() {
         transition={{ duration: 1 }}
         className="max-w-5xl w-full rounded-xl shadow-2xl p-8 space-y-8 bg-gradient-to-br from-purple-400 to-blue-500"
       >
+        <StackedNotifications
+          notification={notification}
+          removeNotif={removeNotif}
+        />
         <div className="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0 w-full">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -221,7 +230,7 @@ export default function Profile() {
 
 function SocialIcon({ platform, icon, onClick }) {
   const handleClick = () => {
-    onClick(platform); // Pass the platform name when clicked
+    onClick(platform);
   };
 
   return (
@@ -229,14 +238,14 @@ function SocialIcon({ platform, icon, onClick }) {
       className="relative p-2 rounded-full shadow-lg overflow-hidden"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      onClick={handleClick} // Ensure onClick is applied to the clickable area
+      onClick={handleClick}
     >
       <div className="relative bg-gradient-to-r from-purple-400 to-indigo-600 rounded-full group overflow-hidden">
         <FontAwesomeIcon
           icon={icon}
           className="text-3xl text-white cursor-pointer m-4"
           title={platform}
-          onClick={handleClick} // Handle click directly on the icon as well
+          onClick={handleClick}
         />
         <motion.div
           className="absolute inset-0 bg-blue-900 opacity-0 rounded-full"
