@@ -116,8 +116,8 @@ const NavLinkWithDropdown = ({ text, children }) => {
 const StoreDropdown = () => {
   return (
     <>
-      <DropdownItem text="Almond" href="/store/category1" />
-      <DropdownItem text="Cashew" href="/store/category2" />
+      <DropdownItem text="Almond" href="/product/almond" />
+      <DropdownItem text="Cashew" href="/product/cashew" />
     </>
   );
 };

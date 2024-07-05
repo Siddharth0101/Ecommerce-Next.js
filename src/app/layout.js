@@ -12,7 +12,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Provider store={ReduxStore}>
-        {" "}
         <body className={inter.className}>
           <Header />
           {children}
