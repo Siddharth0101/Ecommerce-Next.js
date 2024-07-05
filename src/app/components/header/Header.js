@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "@/app/store/tokenSlice";
 import RewardLogo from "./rewardLogo";
+import { useMediaQuery } from "react-responsive";
 
 export default function Header() {
   return (
@@ -72,6 +73,7 @@ const NavLeft = ({ setIsOpen }) => {
 
 const NavLinkWithDropdown = ({ text, children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const isLargeScreen = useMediaQuery({ minWidth: 1024 });
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -79,16 +81,22 @@ const NavLinkWithDropdown = ({ text, children }) => {
 
   return (
     <div className="relative">
-      <button
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-        className="h-[30px] overflow-hidden font-medium lg:block flex items-center gap-2 relative text-gray-600"
-      >
-        <span className="flex items-center h-[30px]">{text}</span>
-        <FiChevronDown className="text-gray-500" />
-      </button>
+      {isLargeScreen ? (
+        <button
+          onMouseEnter={() => setIsOpen(true)}
+          onMouseLeave={() => setIsOpen(false)}
+          className="h-[30px] overflow-hidden font-medium lg:block flex items-center gap-2 relative text-gray-600"
+        >
+          <span className="flex items-center h-[30px]">{text}</span>
+          <FiChevronDown className="text-gray-500" />
+        </button>
+      ) : (
+        <NavLink href="/" text={text} /> // Render as a regular NavLink on smaller screens
+      )}
+
+      {/* Dropdown content */}
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && isLargeScreen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -306,7 +314,7 @@ const NavMenu = ({ isOpen }) => {
       className="absolute p-4 bg-white shadow-lg left-0 right-0 top-full origin-top flex flex-col gap-4"
     >
       <MenuLink text="Home" href="/" />
-      <MenuLink text="Store" href="/store" />
+      <MenuLink text="Store" href="#" />
       <MenuLink text="About Us" href="/about" />
       <MenuLink text="Contact Us" href="/contact" />
     </motion.div>
@@ -314,23 +322,48 @@ const NavMenu = ({ isOpen }) => {
 };
 
 const MenuLink = ({ text, href }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <Link
-      variants={menuLinkVariants}
-      rel="nofollow"
-      href={href || "#"}
-      className="h-[30px] overflow-hidden font-medium text-lg flex items-start gap-2"
-    >
-      <motion.span variants={menuLinkArrowVariants}>
-        <FiArrowRight className="h-[30px] text-gray-950" />
-      </motion.span>
-      <motion.div whileHover={{ y: -30 }}>
-        <span className="flex items-center h-[30px] text-gray-500">{text}</span>
-        <span className="flex items-center h-[30px] text-indigo-600">
-          {text}
-        </span>
-      </motion.div>
-    </Link>
+    <div className="relative">
+      <Link
+        variants={menuLinkVariants}
+        rel="nofollow"
+        href={href || "#"}
+        className="h-[30px] overflow-hidden font-medium text-lg flex items-start gap-2"
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+      >
+        <motion.span variants={menuLinkArrowVariants}>
+          <FiArrowRight className="h-[30px] text-gray-950" />
+        </motion.span>
+        <motion.div whileHover={{ y: -30 }}>
+          <span className="flex items-center h-[30px] text-gray-500">
+            {text}
+          </span>
+          <span className="flex items-center h-[30px] text-indigo-600">
+            {text}
+          </span>
+        </motion.div>
+      </Link>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+          className="absolute mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
+          onMouseEnter={() => setIsOpen(true)}
+          onMouseLeave={() => setIsOpen(false)}
+        >
+          <StoreDropdown />
+        </motion.div>
+      )}
+    </div>
   );
 };
 
