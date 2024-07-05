@@ -91,10 +91,9 @@ const NavLinkWithDropdown = ({ text, children }) => {
           <FiChevronDown className="text-gray-500" />
         </button>
       ) : (
-        <NavLink href="/" text={text} /> // Render as a regular NavLink on smaller screens
+        <NavLink href="/" text={text} />
       )}
 
-      {/* Dropdown content */}
       <AnimatePresence>
         {isOpen && isLargeScreen && (
           <motion.div
