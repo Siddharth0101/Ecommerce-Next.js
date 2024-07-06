@@ -9,6 +9,7 @@ export default function Almond() {
         back="Flavors"
         top="Selection"
       />
+      <h1>Almond page</h1>
     </div>
   );
 }
