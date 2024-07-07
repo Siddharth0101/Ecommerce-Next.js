@@ -34,7 +34,14 @@ const Filters = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg text-gray-800 w-full md:max-w-md mx-auto mb-4 md:mb-0 border border-gray-200">
+    <div
+      className="p-4 bg-white rounded-lg shadow-lg text-gray-800 w-full md:max-w-md mx-auto mb-4 md:mb-0 border border-gray-200"
+      style={{
+        position: "sticky",
+        top: "170px", // Adjust the top distance as per your layout
+        zIndex: 10, // Ensure it's above other content if necessary
+      }}
+    >
       <h2 className="text-2xl font-bold mb-6 border-b pb-2">Filter Options</h2>
 
       {/* Price Section */}
@@ -170,17 +177,6 @@ const Filters = ({ onFilterChange }) => {
           <label className="font-medium cursor-pointer">
             Large Pack (500g - 1kg)
           </label>
-        </div>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="size"
-            value="bulk"
-            checked={selectedSize === "bulk"}
-            onChange={handleSizeChange}
-            className="mr-2 text-green-500 focus:ring-2 focus:ring-green-500"
-          />
-          <label className="font-medium cursor-pointer">Bulk (1kg+)</label>
         </div>
       </div>
     </div>
