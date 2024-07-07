@@ -57,11 +57,11 @@ export default function ProductDisplay({
           <div className="mt-4 flex items-center">
             <p className="text-sm font-semibold text-gray-800 mr-2">
               <span className="line-through">
-                Original Price: ${originalPrice}
+                Original Price: ₹{originalPrice}
               </span>
             </p>
             <p className="text-sm font-semibold text-green-600">
-              Discounted Price: ${discountedPrice}
+              Discounted Price: ₹{discountedPrice}
             </p>
           </div>
           <div className="mt-2 flex items-center">

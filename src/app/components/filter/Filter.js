@@ -1,7 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { productDataActions } from "@/app/store/productData";
 
-const Filters = ({ onFilterChange }) => {
+const Filters = () => {
+  const dispatch = useDispatch();
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
   const [minPrice, setMinPrice] = useState(0);
@@ -10,27 +13,28 @@ const Filters = ({ onFilterChange }) => {
 
   const handlePriceChange = (e) => {
     setSelectedPrice(e.target.value);
-    onFilterChange("price", e.target.value);
+    if (e.target.value === "low-to-high") {
+      dispatch(productDataActions.LowToHigh());
+    } else if (e.target.value === "high-to-low") {
+      dispatch(productDataActions.HighToLow());
+    }
   };
 
   const handleRatingChange = (e) => {
     setSelectedRating(e.target.value);
-    onFilterChange("rating", e.target.value);
   };
 
   const handleMinPriceChange = (e) => {
     setMinPrice(e.target.value);
-    onFilterChange("minPrice", e.target.value);
+    console.log(e.target.value);
   };
 
   const handleMaxPriceChange = (e) => {
     setMaxPrice(e.target.value);
-    onFilterChange("maxPrice", e.target.value);
   };
 
   const handleSizeChange = (e) => {
     setSelectedSize(e.target.value);
-    onFilterChange("size", e.target.value);
   };
 
   return (
@@ -38,8 +42,8 @@ const Filters = ({ onFilterChange }) => {
       className="p-4 bg-white rounded-lg shadow-lg text-gray-800 w-full md:max-w-md mx-auto mb-4 md:mb-0 border border-gray-200"
       style={{
         position: "sticky",
-        top: "170px", // Adjust the top distance as per your layout
-        zIndex: 10, // Ensure it's above other content if necessary
+        top: "170px",
+        zIndex: 10,
       }}
     >
       <h2 className="text-2xl font-bold mb-6 border-b pb-2">Filter Options</h2>
@@ -71,7 +75,6 @@ const Filters = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* Price Range Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">Price Range</h3>
         <div className="flex flex-col mb-3">
@@ -98,7 +101,6 @@ const Filters = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* User Rating Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">User Rating</h3>
         <div className="flex items-center mb-3">
@@ -136,7 +138,6 @@ const Filters = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* Size/Quantity Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">Size/Quantity</h3>
         <div className="flex items-center mb-3">

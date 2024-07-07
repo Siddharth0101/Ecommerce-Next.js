@@ -1,18 +1,22 @@
 "use client";
 import ProductDisplay from "@/app/components/productDisplay/productDisplay";
 import ProductHeader from "@/app/components/productHeader/productHeader";
+import { productDataActions } from "@/app/store/productData";
+
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Almond() {
-  const [data, setData] = useState([]);
-
+  const dispatch = useDispatch();
+  const productData = useSelector((state) => state.productData.items);
+  console.log(productData);
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
         "https://ecommerece-nextjs-92b48-default-rtdb.firebaseio.com/productRaisins.json"
       );
       const jsonData = await response.json();
-      setData(jsonData);
+      dispatch(productDataActions.DataPush(jsonData));
     }
     fetchData();
   }, []);
@@ -26,7 +30,7 @@ export default function Almond() {
         top="Selection"
       />
       <div className="flex flex-wrap">
-        {data.map((item, index) => (
+        {productData.map((item, index) => (
           <ProductDisplay
             key={index}
             title={item.title}
