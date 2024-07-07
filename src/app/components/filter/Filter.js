@@ -7,9 +7,8 @@ const Filters = () => {
   const dispatch = useDispatch();
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100);
   const [selectedSize, setSelectedSize] = useState("");
+  const [bestseller, setBestseller] = useState(false); // State for bestseller filter
 
   const handlePriceChange = (e) => {
     setSelectedPrice(e.target.value);
@@ -24,17 +23,13 @@ const Filters = () => {
     setSelectedRating(e.target.value);
   };
 
-  const handleMinPriceChange = (e) => {
-    setMinPrice(e.target.value);
-    console.log(e.target.value);
-  };
-
-  const handleMaxPriceChange = (e) => {
-    setMaxPrice(e.target.value);
-  };
-
   const handleSizeChange = (e) => {
     setSelectedSize(e.target.value);
+  };
+
+  const handleBestsellerChange = () => {
+    setBestseller(!bestseller); // Toggle bestseller state
+    // Optionally, dispatch an action or update product list based on bestseller state
   };
 
   return (
@@ -75,32 +70,56 @@ const Filters = () => {
         </div>
       </div>
 
+      {/* Price Range Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">Price Range</h3>
-        <div className="flex flex-col mb-3">
-          <label className="mb-1 font-medium">Minimum Price: ${minPrice}</label>
+        <div className="flex items-center mb-3">
           <input
-            type="range"
-            min="0"
-            max="100"
-            value={minPrice}
-            onChange={handleMinPriceChange}
-            className="w-full appearance-none bg-blue-100 h-1 rounded-full outline-none"
+            type="radio"
+            name="price-range"
+            value="500-700"
+            checked={selectedPrice === "500-700"}
+            onChange={handlePriceChange}
+            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
           />
+          <label className="font-medium cursor-pointer">$500 - $700</label>
         </div>
-        <div className="flex flex-col mb-3">
-          <label className="mb-1 font-medium">Maximum Price: ${maxPrice}</label>
+        <div className="flex items-center mb-3">
           <input
-            type="range"
-            min="0"
-            max="100"
-            value={maxPrice}
-            onChange={handleMaxPriceChange}
-            className="w-full appearance-none bg-blue-100 h-1 rounded-full outline-none"
+            type="radio"
+            name="price-range"
+            value="700-900"
+            checked={selectedPrice === "700-900"}
+            onChange={handlePriceChange}
+            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
           />
+          <label className="font-medium cursor-pointer">$700 - $900</label>
+        </div>
+        <div className="flex items-center mb-3">
+          <input
+            type="radio"
+            name="price-range"
+            value="900-1100"
+            checked={selectedPrice === "900-1100"}
+            onChange={handlePriceChange}
+            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
+          />
+          <label className="font-medium cursor-pointer">$900 - $1100</label>
+        </div>
+        <div className="flex items-center mb-3">
+          <input
+            type="radio"
+            name="price-range"
+            value="1100-1300"
+            checked={selectedPrice === "1100-1300"}
+            onChange={handlePriceChange}
+            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
+          />
+          <label className="font-medium cursor-pointer">$1100 - $1300</label>
         </div>
       </div>
 
+      {/* User Rating Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">User Rating</h3>
         <div className="flex items-center mb-3">
@@ -138,45 +157,19 @@ const Filters = () => {
         </div>
       </div>
 
+      {/* Bestseller Section */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-3">Size/Quantity</h3>
+        <h3 className="text-lg font-semibold mb-3">Bestseller</h3>
         <div className="flex items-center mb-3">
           <input
-            type="radio"
-            name="size"
-            value="small"
-            checked={selectedSize === "small"}
-            onChange={handleSizeChange}
+            type="checkbox"
+            id="bestseller"
+            checked={bestseller}
+            onChange={handleBestsellerChange}
             className="mr-2 text-green-500 focus:ring-2 focus:ring-green-500"
           />
-          <label className="font-medium cursor-pointer">
-            Small Pack (100g - 250g)
-          </label>
-        </div>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="size"
-            value="medium"
-            checked={selectedSize === "medium"}
-            onChange={handleSizeChange}
-            className="mr-2 text-green-500 focus:ring-2 focus:ring-green-500"
-          />
-          <label className="font-medium cursor-pointer">
-            Medium Pack (250g - 500g)
-          </label>
-        </div>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="size"
-            value="large"
-            checked={selectedSize === "large"}
-            onChange={handleSizeChange}
-            className="mr-2 text-green-500 focus:ring-2 focus:ring-green-500"
-          />
-          <label className="font-medium cursor-pointer">
-            Large Pack (500g - 1kg)
+          <label htmlFor="bestseller" className="font-medium cursor-pointer">
+            Bestseller
           </label>
         </div>
       </div>
