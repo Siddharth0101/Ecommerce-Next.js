@@ -1,9 +1,18 @@
 import { motion } from "framer-motion";
-import { FiShoppingCart } from "react-icons/fi"; // Assuming you're using React-icons for icons
+import { FiEye } from "react-icons/fi";
+import { AiFillStar } from "react-icons/ai";
 
-export default function ProductDisplay({ image, title, description }) {
+export default function ProductDisplay({
+  image,
+  title,
+  description,
+  originalPrice,
+  discountedPrice,
+  bestsellers,
+  ratings,
+}) {
   const handleClick = () => {
-    console.log("Item added to cart");
+    console.log("Item clicked for details");
   };
 
   return (
@@ -27,6 +36,11 @@ export default function ProductDisplay({ image, title, description }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           />
+          {bestsellers == "yes" && (
+            <div className="absolute top-0 left-0 bg-green-500 text-white py-1 px-2 rounded-b-lg">
+              <span className="text-xs font-semibold">Bestseller</span>
+            </div>
+          )}
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -40,6 +54,30 @@ export default function ProductDisplay({ image, title, description }) {
           <p className="font-sans text-base font-light leading-relaxed text-gray-600">
             {description}
           </p>
+          <div className="mt-4 flex items-center">
+            <p className="text-sm font-semibold text-gray-800 mr-2">
+              <span className="line-through">
+                Original Price: ${originalPrice}
+              </span>
+            </p>
+            <p className="text-sm font-semibold text-green-600">
+              Discounted Price: ${discountedPrice}
+            </p>
+          </div>
+          <div className="mt-2 flex items-center">
+            <p className="text-sm text-gray-600">
+              Ratings:{" "}
+              {Array.from({ length: 5 }).map((_, index) => (
+                <span key={index}>
+                  {index < ratings ? (
+                    <AiFillStar className="inline-block w-4 h-4 text-yellow-500" />
+                  ) : (
+                    <AiFillStar className="inline-block w-4 h-4 text-gray-300" />
+                  )}
+                </span>
+              ))}
+            </p>
+          </div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -53,10 +91,10 @@ export default function ProductDisplay({ image, title, description }) {
             className="rounded-lg relative w-36 h-10 cursor-pointer flex items-center border border-green-500 bg-green-500 group hover:bg-green-500 active:bg-green-500 active:border-green-500"
           >
             <span className="text-gray-200 font-semibold ml-8 transform group-hover:translate-x-20 transition-all duration-300">
-              Add
+              View
             </span>
             <span className="absolute right-0 h-full w-10 rounded-lg bg-green-500 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300">
-              <FiShoppingCart className="w-6 h-6 text-white" />
+              <FiEye className="w-6 h-6 text-white" />
             </span>
           </button>
         </motion.div>

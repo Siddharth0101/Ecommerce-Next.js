@@ -117,7 +117,7 @@ const StoreDropdown = () => {
   return (
     <>
       <DropdownItem text="Almond" href="/product/almond" />
-      <DropdownItem text="Cashew" href="/product/cashew" />
+      <DropdownItem text="Raisins" href="/product/raisins" />
     </>
   );
 };

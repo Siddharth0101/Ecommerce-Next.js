@@ -9,7 +9,7 @@ export default function Almond() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        "https://ecommerece-nextjs-92b48-default-rtdb.firebaseio.com/products.json"
+        "https://ecommerece-nextjs-92b48-default-rtdb.firebaseio.com/productRaisins.json"
       );
       const jsonData = await response.json();
       setData(jsonData);
@@ -20,12 +20,11 @@ export default function Almond() {
   return (
     <div>
       <ProductHeader
-        front="Almond"
+        front="Raisins"
         bottom="Varieties"
         back="Flavors"
         top="Selection"
       />
-
       <div className="flex flex-wrap">
         {data.map((item, index) => (
           <ProductDisplay
