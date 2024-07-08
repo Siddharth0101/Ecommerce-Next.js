@@ -37,29 +37,35 @@ const ProductData = createSlice({
 });
 
 function applyFilters(state) {
-  let filtered = state.items.slice();
+  let filtered = [...state.items];
+  const { sortOrder, priceRange, rating, bestseller } = state.filters;
 
-  if (state.filters.sortOrder === "low-to-high") {
-    filtered.sort((a, b) => a.discountPrice - b.discountPrice);
-  } else if (state.filters.sortOrder === "high-to-low") {
-    filtered.sort((a, b) => b.discountPrice - a.discountPrice);
+  if (sortOrder) {
+    filtered.sort((a, b) =>
+      sortOrder === "low-to-high"
+        ? a.discountPrice - b.discountPrice
+        : b.discountPrice - a.discountPrice
+    );
   }
 
-  if (state.filters.priceRange) {
-    const [min, max] = state.filters.priceRange.split("-").map(Number);
+  if (priceRange) {
+    const range = priceRange.split("-");
+    const min = Number(range[0]);
+    const max = Number(range[1]);
     filtered = filtered.filter(
       (item) => item.discountPrice >= min && item.discountPrice <= max
     );
   }
 
-  if (state.filters.rating) {
-    const minRating = Number(state.filters.rating.split("-")[0]);
+  if (rating) {
+    const minRating = parseFloat(rating);
     filtered = filtered.filter((item) => item.ratings >= minRating);
   }
 
-  if (state.filters.bestseller) {
-    filtered = filtered.filter((item) => item.bestsellers == "yes");
+  if (bestseller) {
+    filtered = filtered.filter((item) => item.bestsellers === "yes");
   }
+
   state.filteredItems = filtered;
 }
 
