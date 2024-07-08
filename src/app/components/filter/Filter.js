@@ -1,36 +1,63 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { productDataActions } from "@/app/store/productData";
 
 const Filters = () => {
   const dispatch = useDispatch();
-  const [selectedPrice, setSelectedPrice] = useState("");
-  const [selectedRating, setSelectedRating] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
-  const [bestseller, setBestseller] = useState(false); // State for bestseller filter
 
-  const handlePriceChange = (e) => {
-    setSelectedPrice(e.target.value);
-    if (e.target.value === "low-to-high") {
-      dispatch(productDataActions.LowToHigh());
-    } else if (e.target.value === "high-to-low") {
-      dispatch(productDataActions.HighToLow());
-    }
+  const [selectedSortOrder, setSelectedSortOrder] = useState("");
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
+  const [selectedRating, setSelectedRating] = useState("");
+  const [bestseller, setBestseller] = useState(false);
+  const currentProductPage = "/product/almond";
+  const priceRanges = {
+    "/product/raisins": [
+      { value: "80-120", label: "₹80 - ₹120" },
+      { value: "120-160", label: "₹120 - ₹160" },
+      { value: "160-200", label: "₹160 - ₹200" },
+      { value: "200-250", label: "₹200 - ₹250" },
+    ],
+    "/product/almond": [
+      { value: "500-700", label: "₹500 - ₹700" },
+      { value: "700-900", label: "₹700 - ₹900" },
+      { value: "900-1100", label: "₹900 - ₹1100" },
+      { value: "1100-1300", label: "₹1100 - ₹1300" },
+    ],
+  };
+
+  const currentPriceRanges = priceRanges[currentProductPage];
+
+  const handleSortOrderChange = (e) => {
+    const value = e.target.value;
+    const newValue = selectedSortOrder === value ? "" : value;
+    setSelectedSortOrder(newValue);
+    dispatch(productDataActions.setSortOrder(newValue));
+  };
+
+  const handlePriceRangeChange = (e) => {
+    const value = e.target.value;
+    const newValue = selectedPriceRange === value ? "" : value;
+    setSelectedPriceRange(newValue);
+    dispatch(productDataActions.setPriceRange(newValue));
   };
 
   const handleRatingChange = (e) => {
-    setSelectedRating(e.target.value);
-  };
-
-  const handleSizeChange = (e) => {
-    setSelectedSize(e.target.value);
+    const value = e.target.value;
+    const newValue = selectedRating === value ? "" : value;
+    setSelectedRating(newValue);
+    dispatch(productDataActions.setRating(newValue));
   };
 
   const handleBestsellerChange = () => {
-    setBestseller(!bestseller); // Toggle bestseller state
-    // Optionally, dispatch an action or update product list based on bestseller state
+    const newValue = !bestseller;
+    setBestseller(newValue);
+    dispatch(productDataActions.setBestseller(newValue));
   };
+
+  useEffect(() => {
+    setSelectedPriceRange("");
+  }, [currentProductPage]);
 
   return (
     <div
@@ -43,121 +70,98 @@ const Filters = () => {
     >
       <h2 className="text-2xl font-bold mb-6 border-b pb-2">Filter Options</h2>
 
-      {/* Price Section */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-3">Price</h3>
+        <h3 className="text-lg font-semibold mb-3">Sort By Price</h3>
         <div className="flex items-center mb-3">
           <input
-            type="radio"
-            name="price"
+            type="checkbox"
+            id="low-to-high"
             value="low-to-high"
-            checked={selectedPrice === "low-to-high"}
-            onChange={handlePriceChange}
+            checked={selectedSortOrder === "low-to-high"}
+            onChange={handleSortOrderChange}
             className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
           />
-          <label className="font-medium cursor-pointer">Low to High</label>
+          <label htmlFor="low-to-high" className="font-medium cursor-pointer">
+            Low to High
+          </label>
         </div>
         <div className="flex items-center mb-3">
           <input
-            type="radio"
-            name="price"
+            type="checkbox"
+            id="high-to-low"
             value="high-to-low"
-            checked={selectedPrice === "high-to-low"}
-            onChange={handlePriceChange}
+            checked={selectedSortOrder === "high-to-low"}
+            onChange={handleSortOrderChange}
             className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
           />
-          <label className="font-medium cursor-pointer">High to Low</label>
+          <label htmlFor="high-to-low" className="font-medium cursor-pointer">
+            High to Low
+          </label>
         </div>
       </div>
 
-      {/* Price Range Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">Price Range</h3>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="price-range"
-            value="500-700"
-            checked={selectedPrice === "500-700"}
-            onChange={handlePriceChange}
-            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
-          />
-          <label className="font-medium cursor-pointer">$500 - $700</label>
-        </div>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="price-range"
-            value="700-900"
-            checked={selectedPrice === "700-900"}
-            onChange={handlePriceChange}
-            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
-          />
-          <label className="font-medium cursor-pointer">$700 - $900</label>
-        </div>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="price-range"
-            value="900-1100"
-            checked={selectedPrice === "900-1100"}
-            onChange={handlePriceChange}
-            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
-          />
-          <label className="font-medium cursor-pointer">$900 - $1100</label>
-        </div>
-        <div className="flex items-center mb-3">
-          <input
-            type="radio"
-            name="price-range"
-            value="1100-1300"
-            checked={selectedPrice === "1100-1300"}
-            onChange={handlePriceChange}
-            className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
-          />
-          <label className="font-medium cursor-pointer">$1100 - $1300</label>
-        </div>
+        {currentPriceRanges.map((range) => (
+          <div className="flex items-center mb-3" key={range.value}>
+            <input
+              type="checkbox"
+              id={range.value}
+              value={range.value}
+              checked={selectedPriceRange === range.value}
+              onChange={handlePriceRangeChange}
+              className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
+            />
+            <label htmlFor={range.value} className="font-medium cursor-pointer">
+              {range.label}
+            </label>
+          </div>
+        ))}
       </div>
 
-      {/* User Rating Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">User Rating</h3>
         <div className="flex items-center mb-3">
           <input
-            type="radio"
-            name="rating"
+            type="checkbox"
+            id="4-and-above"
             value="4-and-above"
             checked={selectedRating === "4-and-above"}
             onChange={handleRatingChange}
             className="mr-2 text-yellow-500 focus:ring-2 focus:ring-yellow-500"
           />
-          <label className="font-medium cursor-pointer">4 Stars & Above</label>
+          <label htmlFor="4-and-above" className="font-medium cursor-pointer">
+            4 Stars & Above
+          </label>
         </div>
         <div className="flex items-center mb-3">
           <input
-            type="radio"
-            name="rating"
+            type="checkbox"
+            id="3-and-above"
             value="3-and-above"
             checked={selectedRating === "3-and-above"}
             onChange={handleRatingChange}
             className="mr-2 text-yellow-500 focus:ring-2 focus:ring-yellow-500"
           />
-          <label className="font-medium cursor-pointer">3 Stars & Above</label>
+          <label htmlFor="3-and-above" className="font-medium cursor-pointer">
+            3 Stars & Above
+          </label>
         </div>
         <div className="flex items-center mb-3">
           <input
-            type="radio"
-            name="rating"
+            type="checkbox"
+            id="2-and-above"
             value="2-and-above"
             checked={selectedRating === "2-and-above"}
             onChange={handleRatingChange}
             className="mr-2 text-yellow-500 focus:ring-2 focus:ring-yellow-500"
           />
-          <label className="font-medium cursor-pointer">2 Stars & Above</label>
+          <label htmlFor="2-and-above" className="font-medium cursor-pointer">
+            2 Stars & Above
+          </label>
         </div>
       </div>
 
-      {/* Bestseller Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">Bestseller</h3>
         <div className="flex items-center mb-3">

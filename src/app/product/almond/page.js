@@ -2,13 +2,13 @@
 import ProductDisplay from "@/app/components/productDisplay/productDisplay";
 import ProductHeader from "@/app/components/productHeader/productHeader";
 import { productDataActions } from "@/app/store/productData";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Almond() {
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.productData.items);
-  console.log(productData);
+  const productData = useSelector((state) => state.productData.filteredItems);
+
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
@@ -18,7 +18,7 @@ export default function Almond() {
       dispatch(productDataActions.DataPush(jsonData));
     }
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

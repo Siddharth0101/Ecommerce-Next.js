@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Almond() {
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.productData.items);
-  console.log(productData);
+  const productData = useSelector((state) => state.productData.filteredItems);
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
@@ -19,7 +18,7 @@ export default function Almond() {
       dispatch(productDataActions.DataPush(jsonData));
     }
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
