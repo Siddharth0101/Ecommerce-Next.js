@@ -16,12 +16,12 @@ import SearchModal from "./SearchModal";
 import SiteLogo from "./SiteLogo";
 import CountDown from "./CountDown";
 import Cart from "./Cart";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "@/app/store/tokenSlice";
 import RewardLogo from "./rewardLogo";
 import { useMediaQuery } from "react-responsive";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   return (

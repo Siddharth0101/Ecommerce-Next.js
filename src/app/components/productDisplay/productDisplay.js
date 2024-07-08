@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FiEye } from "react-icons/fi";
 import { AiFillStar } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 export default function ProductDisplay({
   image,
@@ -11,8 +12,10 @@ export default function ProductDisplay({
   bestsellers,
   ratings,
 }) {
-  const handleClick = () => {
-    console.log("Item clicked for details");
+  const router = useRouter();
+  const handleViewClick = (e) => {
+    e.preventDefault();
+    router.push(`/product/almond/${title}`);
   };
 
   return (
@@ -36,7 +39,7 @@ export default function ProductDisplay({
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           />
-          {bestsellers == "yes" && (
+          {bestsellers === "yes" && (
             <div className="absolute top-0 left-0 bg-green-500 text-white py-1 px-2 rounded-b-lg">
               <span className="text-xs font-semibold">Bestseller</span>
             </div>
@@ -86,11 +89,11 @@ export default function ProductDisplay({
           className="p-6 pt-0"
         >
           <button
-            onClick={handleClick}
             type="button"
             className="rounded-lg relative w-36 h-10 cursor-pointer flex items-center border border-green-500 bg-green-500 group hover:bg-green-500 active:bg-green-500 active:border-green-500"
+            onClick={handleViewClick}
           >
-            <span className="text-gray-200 font-semibold ml-8 transform group-hover:translate-x-20 transition-all duration-300">
+            <span className="text-gray-200 font-semibold ml-8 transform group-hover:translate-x-30 transition-all duration-300">
               View
             </span>
             <span className="absolute right-0 h-full w-10 rounded-lg bg-green-500 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300">

@@ -1,21 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { productDataActions } from "@/app/store/productData";
 
 const Filters = () => {
+  const pathname = usePathname();
   const dispatch = useDispatch();
   const [selectedSortOrder, setSelectedSortOrder] = useState("");
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
   const [bestseller, setBestseller] = useState(false);
-  const [currentProductPage, setCurrentProductPage] = useState("");
-
-  // Effect to set currentProductPage based on window location
-  useEffect(() => {
-    const path = window.location.pathname;
-    setCurrentProductPage(path);
-  }, []);
 
   const priceRanges = {
     "/product/raisins": [
@@ -31,7 +26,9 @@ const Filters = () => {
       { value: "1100-1300", label: "₹1100 - ₹1300" },
     ],
   };
-  const currentPriceRanges = priceRanges[currentProductPage];
+
+  const currentPriceRanges = priceRanges[pathname];
+
   const handleSortOrderChange = (e) => {
     const value = e.target.value;
     const newValue = selectedSortOrder === value ? "" : value;
@@ -61,7 +58,7 @@ const Filters = () => {
 
   useEffect(() => {
     setSelectedPriceRange("");
-  }, [currentProductPage]);
+  }, [pathname]);
 
   return (
     <div
