@@ -22,6 +22,7 @@ const Filters = () => {
       { value: "80-120", label: "₹80 - ₹120" },
       { value: "120-160", label: "₹120 - ₹160" },
       { value: "160-200", label: "₹160 - ₹200" },
+      { value: "200-250", label: "₹200 - ₹250" },
     ],
     "/product/almond": [
       { value: "500-700", label: "₹500 - ₹700" },
@@ -30,9 +31,7 @@ const Filters = () => {
       { value: "1100-1300", label: "₹1100 - ₹1300" },
     ],
   };
-
   const currentPriceRanges = priceRanges[currentProductPage];
-
   const handleSortOrderChange = (e) => {
     const value = e.target.value;
     const newValue = selectedSortOrder === value ? "" : value;

@@ -2,23 +2,38 @@
 import ProductDisplay from "@/app/components/productDisplay/productDisplay";
 import ProductHeader from "@/app/components/productHeader/productHeader";
 import { productDataActions } from "@/app/store/productData";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "./loading";
 
 export default function Almond() {
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.productData.filteredItems);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        "https://ecommerece-nextjs-92b48-default-rtdb.firebaseio.com/productRaisins.json"
-      );
-      const jsonData = await response.json();
-      dispatch(productDataActions.DataPush(jsonData));
+      try {
+        const response = await fetch(
+          "https://ecommerece-nextjs-92b48-default-rtdb.firebaseio.com/productRaisins.json"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const jsonData = await response.json();
+        dispatch(productDataActions.DataPush(jsonData));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, [dispatch]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
