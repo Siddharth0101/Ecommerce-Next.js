@@ -5,18 +5,23 @@ import { productDataActions } from "@/app/store/productData";
 
 const Filters = () => {
   const dispatch = useDispatch();
-
   const [selectedSortOrder, setSelectedSortOrder] = useState("");
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
   const [bestseller, setBestseller] = useState(false);
-  const currentProductPage = "/product/almond";
+  const [currentProductPage, setCurrentProductPage] = useState("");
+
+  // Effect to set currentProductPage based on window location
+  useEffect(() => {
+    const path = window.location.pathname;
+    setCurrentProductPage(path);
+  }, []);
+
   const priceRanges = {
     "/product/raisins": [
       { value: "80-120", label: "₹80 - ₹120" },
       { value: "120-160", label: "₹120 - ₹160" },
       { value: "160-200", label: "₹160 - ₹200" },
-      { value: "200-250", label: "₹200 - ₹250" },
     ],
     "/product/almond": [
       { value: "500-700", label: "₹500 - ₹700" },
@@ -102,21 +107,25 @@ const Filters = () => {
 
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">Price Range</h3>
-        {currentPriceRanges.map((range) => (
-          <div className="flex items-center mb-3" key={range.value}>
-            <input
-              type="checkbox"
-              id={range.value}
-              value={range.value}
-              checked={selectedPriceRange === range.value}
-              onChange={handlePriceRangeChange}
-              className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
-            />
-            <label htmlFor={range.value} className="font-medium cursor-pointer">
-              {range.label}
-            </label>
-          </div>
-        ))}
+        {currentPriceRanges &&
+          currentPriceRanges.map((range) => (
+            <div className="flex items-center mb-3" key={range.value}>
+              <input
+                type="checkbox"
+                id={range.value}
+                value={range.value}
+                checked={selectedPriceRange === range.value}
+                onChange={handlePriceRangeChange}
+                className="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-600"
+              />
+              <label
+                htmlFor={range.value}
+                className="font-medium cursor-pointer"
+              >
+                {range.label}
+              </label>
+            </div>
+          ))}
       </div>
 
       <div className="mb-6">
