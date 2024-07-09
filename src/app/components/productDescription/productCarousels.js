@@ -155,10 +155,9 @@ export default function ProductDescriptionPage() {
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 1.0 }}
-              className="mb-6 flex items-center"
+              className="mb-6"
             >
-              <span className="font-bold">Size:</span>
-              <div className="flex flex-wrap mt-2">
+              <div className="flex mt-2 space-x-2 flex-wrap">
                 {Object.values(product.sizes).map((size) => (
                   <button
                     key={size.label}
@@ -166,7 +165,7 @@ export default function ProductDescriptionPage() {
                       selectedSize === size.label
                         ? "bg-blue-500 text-white"
                         : "bg-white text-gray-700"
-                    } rounded mt-2 mr-2 hover:bg-blue-500 hover:text-white focus:outline-none`}
+                    } rounded mt-2 hover:bg-blue-500 hover:text-white focus:outline-none`}
                     onClick={() => setSelectedSize(size.label)}
                   >
                     {size.label} ({size.inventory} available)
@@ -194,7 +193,7 @@ export default function ProductDescriptionPage() {
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 1.4 }}
-              className="flex space-x-4 mt-6"
+              className="flex space-x-4 mt-6 flex-wrap"
             >
               <button
                 onClick={addToCart}
