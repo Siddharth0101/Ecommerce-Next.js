@@ -49,15 +49,14 @@ const product = {
     { name: "L (1000 GM)", inStock: 3 },
   ],
   description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
+    "Indulge in nature's wholesome treasures with our premium selection of nuts. From creamy almonds to buttery cashews, each bite offers a delightful crunch packed with nutrients.",
   highlights: [
-    "Hand cut and sewn locally",
-    "Dyed with our proprietary colors",
-    "Pre-washed & pre-shrunk",
-    "Ultra-soft 100% cotton",
+    "Locally sourced and hand-picked",
+    "Roasted to perfection in small batches",
+    "Packed fresh for maximum flavor",
   ],
   details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+    " Our artisan-crafted nuts are roasted to perfection, enhancing their natural goodness and delivering a rich, satisfying taste that’s perfect for any occasion.",
   bestseller: true,
   discountPrice: "$160",
   totalPrice: "$192",
@@ -66,7 +65,7 @@ const product = {
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
-export default function Example() {
+export default function ProductDescriptionPage() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false);
