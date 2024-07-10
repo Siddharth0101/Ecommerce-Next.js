@@ -71,38 +71,31 @@ export default function Example() {
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false);
 
-  // Handling image gallery slide change
-  const handleSlide = (index) => {
-    console.log("Slid to index", index);
-  };
-
-  // Toggle Wishlist
   const toggleWishlist = () => {
     setIsInWishlist((prev) => !prev);
   };
 
-  // Increment quantity
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
-  // Decrement quantity
   const decrementQuantity = () => {
     if (quantity > 1) {
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
 
-  // Disable or enable Add to Bag button based on selectedSize
-  const isAddToBagDisabled = !selectedSize;
+  const isAddToBagDisabled = !selectedSize || selectedSize.inStock < quantity;
 
-  // Handle form submission
   const handleAddToBag = (e) => {
     e.preventDefault();
     if (selectedSize) {
-      // Handle adding to bag logic here
       console.log(`Adding ${quantity} of ${selectedSize.name} to bag`);
     }
+  };
+
+  const handleSlide = (index) => {
+    console.log("Slid to index", index);
   };
 
   return (
@@ -118,7 +111,7 @@ export default function Example() {
             onSlide={handleSlide}
             startIndex={0}
             renderItem={(item) => (
-              <div className="relative h-80 sm:h-96 overflow-hidden rounded-lg">
+              <div className="relative h-80 sm:h-96 overflow-hidden rounded-lg shadow-md">
                 <img
                   src={item.original}
                   alt={item.alt}
@@ -127,7 +120,7 @@ export default function Example() {
               </div>
             )}
             renderThumbInner={(item) => (
-              <div className="h-16 sm:h-24 overflow-hidden rounded-md">
+              <div className="h-16 sm:h-24 overflow-hidden rounded-md shadow-md">
                 <img
                   src={item.thumbnail}
                   alt={item.alt}
@@ -142,17 +135,17 @@ export default function Example() {
         <div className="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:pt-16 bg-white shadow-lg rounded-lg">
           <div className="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8">
             <div className="flex flex-col h-full">
-              <div className="flex items-center">
+              <div className="flex items-center justify-between">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
                   {product.name}
                 </h1>
                 {product.bestseller && (
-                  <span className="ml-2 inline-block bg-indigo-500 text-white px-2 py-0.5 text-xs sm:text-sm font-semibold uppercase rounded">
+                  <span className="bg-indigo-500 text-white px-2 py-0.5 text-xs sm:text-sm font-semibold uppercase rounded">
                     Bestseller
                   </span>
                 )}
                 <button
-                  className="ml-2 text-gray-500 focus:outline-none"
+                  className="text-gray-500 focus:outline-none"
                   onClick={toggleWishlist}
                 >
                   <HeartIcon
@@ -297,7 +290,6 @@ export default function Example() {
                         </svg>
                       </button>
                       <input
-                        type="number"
                         id="quantity"
                         name="quantity"
                         min="1"
@@ -306,6 +298,9 @@ export default function Example() {
                         onChange={(e) => setQuantity(parseInt(e.target.value))}
                         className="appearance-none w-20 bg-white text-gray-900 font-semibold text-center rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       />
+                      <span className="ml-2 text-gray-500 mr-4">
+                        / {selectedSize.inStock} In Stock
+                      </span>
                       <button
                         type="button"
                         onClick={incrementQuantity}
