@@ -30,6 +30,7 @@
     "react-router-dom": "^6.24.1",
     "react-slick": "^0.30.2",
     "react-slider": "^2.0.6",
+    "react-tippy": "^1.4.0",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.3.0"
   },
