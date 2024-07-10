@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation";
 const AlmondLayout = ({ children }) => {
   const pathname = usePathname();
 
-  const showFilters =
-    pathname === "/product/raisins" || pathname === "/product/almond";
+  const showFilters = pathname === "/product/almond";
 
   return (
     <div className="flex flex-wrap">

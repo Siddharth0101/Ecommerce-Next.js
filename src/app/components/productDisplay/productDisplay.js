@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FiEye } from "react-icons/fi";
 import { AiFillStar } from "react-icons/ai";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ProductDisplay({
   image,
@@ -13,9 +13,10 @@ export default function ProductDisplay({
   ratings,
 }) {
   const router = useRouter();
+  const currentPath = usePathname();
   const handleViewClick = (e) => {
     e.preventDefault();
-    router.push(`/product/almond/${title}`);
+    router.push(`${currentPath}/${title}`);
   };
 
   return (
