@@ -8,12 +8,14 @@ import {
 } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchSliceActions } from "@/app/store/searchSlice";
+import SearchCard from "../searchCard/searchCard";
 
 export default function SearchModal({ open, setOpen }) {
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const searchFilter = useSelector((state) => state.search.items);
+  // console.log(searchFilter);
   const handleChange = (event) => {
     const { value } = event.target;
     setSearchText(value);
@@ -47,7 +49,6 @@ export default function SearchModal({ open, setOpen }) {
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
-        // Handle error state, maybe show an error message to the user
       }
     }
 
@@ -74,6 +75,7 @@ export default function SearchModal({ open, setOpen }) {
             />
           </div>
         </div>
+        <SearchCard />
       </DragCloseDrawer>
     </div>
   );

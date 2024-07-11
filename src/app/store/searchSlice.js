@@ -11,11 +11,9 @@ const SearchSlice = createSlice({
     PUSHDATA(state, action) {
       state.items = action.payload;
       state.originalItems = action.payload;
-      console.log(state.items);
     },
     ENTERED(state, action) {
       state.entered = action.payload;
-      console.log(state.entered);
     },
     LOGIC(state, action) {
       if (state.entered.trim() === "") {
@@ -25,7 +23,6 @@ const SearchSlice = createSlice({
           item.title.toLowerCase().includes(state.entered.toLowerCase())
         );
       }
-      console.log(state.items);
     },
   },
 });
