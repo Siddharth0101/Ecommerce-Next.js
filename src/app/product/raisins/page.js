@@ -58,6 +58,10 @@ export default function Almond() {
             large={item.large.quantity}
             medium={item.medium.quantity}
             small={item.small.quantity}
+            image1={item.imageView.image1}
+            image2={item.imageView.image2}
+            image3={item.imageView.image3}
+            image4={item.imageView.image4}
           />
         ))}
       </div>

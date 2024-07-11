@@ -4,68 +4,59 @@ import { StarIcon, HeartIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { useSelector } from "react-redux";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const product = {
-  name: "Basic Tee 6-Pack",
-  price: "$192",
-  href: "#",
-  images: [
-    {
-      original:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
-      thumbnail:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
-      alt: "Two each of gray, white, and black shirts laying flat.",
-    },
-    {
-      original:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
-      thumbnail:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
-      alt: "Model wearing plain black basic tee.",
-    },
-    {
-      original:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-      thumbnail:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-      alt: "Model wearing plain gray basic tee.",
-    },
-    {
-      original:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
-      thumbnail:
-        "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
-      alt: "Model wearing plain white basic tee.",
-    },
-  ],
-  sizes: [
-    { name: "S (250 GM)", inStock: 2 },
-    { name: "M (500 GM)", inStock: 4 },
-    { name: "L (1000 GM)", inStock: 3 },
-  ],
-  description:
-    "Indulge in nature's wholesome treasures with our premium selection of nuts. From creamy almonds to buttery cashews, each bite offers a delightful crunch packed with nutrients.",
-  highlights: [
-    "Locally sourced and hand-picked",
-    "Roasted to perfection in small batches",
-    "Packed fresh for maximum flavor",
-  ],
-  details:
-    " Our artisan-crafted nuts are roasted to perfection, enhancing their natural goodness and delivering a rich, satisfying taste that’s perfect for any occasion.",
-  bestseller: true,
-  discountPrice: "$160",
-  totalPrice: "$192",
-  rating: 4,
-};
-
-const reviews = { href: "#", average: 4, totalCount: 117 };
-
 export default function ProductDescriptionPage() {
+  const descriptionData = useSelector((state) => state.description.display);
+  console.log(descriptionData);
+  const product = {
+    name: descriptionData.title,
+    originalPrice: `₹${descriptionData.originalPrice}`,
+    discountPrice: `₹${descriptionData.discountedPrice}`,
+    images: [
+      {
+        original: descriptionData.image1,
+        thumbnail: descriptionData.image1,
+        alt: "Image of an Almond",
+      },
+      {
+        original: descriptionData.image2,
+        thumbnail: descriptionData.image2,
+        alt: "Image of an Almond",
+      },
+      {
+        original: descriptionData.image3,
+        thumbnail: descriptionData.image3,
+        alt: "Image of an Almond",
+      },
+      {
+        original: descriptionData.image4,
+        thumbnail: descriptionData.image4,
+        alt: "Image of an Almond",
+      },
+    ],
+    sizes: [
+      { name: "S (250 GM)", inStock: descriptionData.small },
+      { name: "M (500 GM)", inStock: descriptionData.medium },
+      { name: "L (1000 GM)", inStock: descriptionData.large },
+    ],
+    description: descriptionData.description,
+    highlights: [
+      "Locally sourced and hand-picked",
+      "Roasted to perfection in small batches",
+      "Packed fresh for maximum flavor",
+    ],
+    details:
+      " Our artisan-crafted nuts are roasted to perfection, enhancing their natural goodness and delivering a rich, satisfying taste that’s perfect for any occasion.",
+    bestseller: descriptionData.bestsellers == "yes",
+    rating: descriptionData.ratings,
+  };
+
+  const reviews = { totalCount: 117 };
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false);
@@ -157,11 +148,11 @@ export default function ProductDescriptionPage() {
                 </button>
               </div>
               <p className="text-lg sm:text-xl font-semibold tracking-tight text-gray-900 mt-2">
-                {product.price}
+                {product.discountPrice}
               </p>
               {product.discountPrice && (
                 <p className="text-sm sm:text-base text-gray-500 line-through">
-                  {product.totalPrice}
+                  {product.originalPrice}
                 </p>
               )}
               <div className="flex items-center mt-2 space-x-1">

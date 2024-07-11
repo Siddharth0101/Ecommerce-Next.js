@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { FiEye } from "react-icons/fi";
 import { AiFillStar } from "react-icons/ai";
 import { usePathname, useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { DescriptionSliceAction } from "@/app/store/descriptionSlice";
 
 export default function ProductDisplay({
   image,
@@ -11,11 +13,36 @@ export default function ProductDisplay({
   discountedPrice,
   bestsellers,
   ratings,
+  large,
+  medium,
+  small,
+  image1,
+  image2,
+  image3,
+  image4,
 }) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const currentPath = usePathname();
   const handleViewClick = (e) => {
     e.preventDefault();
+    const data = {
+      title,
+      description,
+      originalPrice,
+      discountedPrice,
+      ratings,
+      bestsellers,
+      large,
+      medium,
+      small,
+      image1,
+      image2,
+      image3,
+      image4,
+    };
+    console.log(data);
+    dispatch(DescriptionSliceAction.DISPLAY(data));
     router.push(`${currentPath}/${title}`);
   };
 
