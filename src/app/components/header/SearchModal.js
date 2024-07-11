@@ -16,7 +16,7 @@ export default function SearchModal({ open, setOpen }) {
             <input
               type="text"
               placeholder="Search..."
-              className="px-4 py-2 bg-neutral-800 text-neutral-200 border border-neutral-700 rounded-lg w-full max-w-xs sm:max-w-md"
+              className="px-4 py-2 bg-neutral-800 text-neutral-200 border border-neutral-700 rounded-lg w-full sm:max-w-xs md:max-w-md"
             />
           </div>
         </div>

@@ -12,7 +12,6 @@ function classNames(...classes) {
 
 export default function ProductDescriptionPage() {
   const descriptionData = useSelector((state) => state.description.display);
-  console.log(descriptionData);
   const product = {
     name: descriptionData.title,
     originalPrice: `₹${descriptionData.originalPrice}`,

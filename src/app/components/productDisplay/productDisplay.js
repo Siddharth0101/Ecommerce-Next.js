@@ -41,7 +41,6 @@ export default function ProductDisplay({
       image3,
       image4,
     };
-    console.log(data);
     dispatch(DescriptionSliceAction.DISPLAY(data));
     router.push(`${currentPath}/${title}`);
   };
@@ -52,6 +51,7 @@ export default function ProductDisplay({
         whileHover={{ scale: 1.05, rotateY: 5 }}
         whileTap={{ scale: 0.95 }}
         className="relative flex flex-col w-full md:w-80 rounded-xl bg-white text-gray-700 shadow-md m-4 overflow-hidden cursor-pointer ml-14"
+        onClick={handleViewClick}
       >
         <motion.div
           initial={{ opacity: 0 }}
