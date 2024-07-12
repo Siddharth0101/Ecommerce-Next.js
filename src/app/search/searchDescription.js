@@ -12,6 +12,7 @@ function classNames(...classes) {
 export default function SearchDescription() {
   const descriptionData = useSelector((state) => state.description.display);
   const product = {
+    id: descriptionData.id,
     name: descriptionData.title,
     originalPrice: `₹${descriptionData.originalPrice}`,
     discountPrice: `₹${descriptionData.discountedPrice}`,
@@ -79,6 +80,7 @@ export default function SearchDescription() {
     e.preventDefault();
     if (selectedSize) {
       const data = {
+        id: product.id,
         title: product.name,
         discountPrice: product.discountPrice,
         image: descriptionData.image,

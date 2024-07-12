@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { DescriptionSliceAction } from "@/app/store/descriptionSlice";
 
 export default function SearchDisplay({
+  id,
   image,
   title,
   description,
@@ -28,6 +29,7 @@ export default function SearchDisplay({
   const handleViewClick = (e) => {
     e.preventDefault();
     const data = {
+      id,
       title,
       description,
       originalPrice,

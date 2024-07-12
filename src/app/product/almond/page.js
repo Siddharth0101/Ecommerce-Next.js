@@ -45,6 +45,7 @@ export default function Almond() {
         {productData.map((item, index) => (
           <ProductDisplay
             key={index}
+            id={item.id}
             title={item.title}
             image={item.image}
             bestsellers={item.bestsellers}

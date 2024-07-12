@@ -9,6 +9,7 @@ export default function SearchCard({ setOpen }) {
         <div key={index} className="inline-block flex-shrink-0 px-4">
           <SearchDisplay
             setOpen={setOpen}
+            id={item.id}
             title={item.title}
             image={item.image}
             description={item.description}

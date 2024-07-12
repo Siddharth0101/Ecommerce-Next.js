@@ -67,7 +67,8 @@ const Login = () => {
         }
         return;
       }
-
+      localStorage.setItem("email", responseData.email);
+      dispatch(TokenSliceActions.EMAILID(responseData.email));
       dispatch(TokenSliceActions.DISPLAYNAME(responseData.displayName));
       dispatch(TokenSliceActions.LOGIN());
       localStorage.setItem("token", responseData.idToken);

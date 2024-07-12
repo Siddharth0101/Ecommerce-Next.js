@@ -1,3 +1,4 @@
+import CartSlice from "./cartSlice";
 import DescriptionSlice from "./descriptionSlice";
 import ProductData from "./productData";
 import SearchSlice from "./searchSlice";
@@ -11,6 +12,7 @@ const ReduxStore = configureStore({
     productData: ProductData.reducer,
     description: DescriptionSlice.reducer,
     search: SearchSlice.reducer,
+    cart: CartSlice.reducer,
   },
 });
 export default ReduxStore;

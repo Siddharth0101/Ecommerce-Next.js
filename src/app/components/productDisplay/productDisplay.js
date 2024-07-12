@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { DescriptionSliceAction } from "@/app/store/descriptionSlice";
 
 export default function ProductDisplay({
+  id,
   image,
   title,
   description,
@@ -27,6 +28,7 @@ export default function ProductDisplay({
   const handleViewClick = (e) => {
     e.preventDefault();
     const data = {
+      id,
       title,
       description,
       originalPrice,
@@ -45,7 +47,6 @@ export default function ProductDisplay({
     dispatch(DescriptionSliceAction.DISPLAY(data));
     router.push(`${currentPath}/${title}`);
   };
-
   return (
     <div className="flex justify-center md:justify-start">
       <motion.div
