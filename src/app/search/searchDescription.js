@@ -78,7 +78,14 @@ export default function SearchDescription() {
   const handleAddToBag = (e) => {
     e.preventDefault();
     if (selectedSize) {
-      console.log(`Adding ${quantity} of ${selectedSize.name} to bag`);
+      const data = {
+        title: product.name,
+        discountPrice: product.discountPrice,
+        image: descriptionData.image,
+        size: selectedSize.name,
+        quantity: quantity,
+      };
+      console.log(data);
     }
   };
 

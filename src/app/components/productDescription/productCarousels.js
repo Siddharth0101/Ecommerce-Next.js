@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
-import { StarIcon, HeartIcon } from "@heroicons/react/20/solid";
+import {
+  StarIcon,
+  HeartIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -79,14 +83,20 @@ export default function ProductDescriptionPage() {
   const handleAddToBag = (e) => {
     e.preventDefault();
     if (selectedSize) {
-      console.log(`Adding ${quantity} of ${selectedSize.name} to bag`);
+      const data = {
+        title: product.name,
+        discountPrice: product.discountPrice,
+        image: descriptionData.image,
+        size: selectedSize.name,
+        quantity: quantity,
+      };
+      console.log(data);
     }
   };
 
   const handleSlide = (index) => {
     console.log("Slid to index", index);
   };
-
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="py-6">
@@ -325,6 +335,10 @@ export default function ProductDescriptionPage() {
                     "mt-8 w-full flex items-center justify-center rounded-md border border-transparent py-3 px-8 text-base sm:text-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   )}
                 >
+                  <ShoppingCartIcon
+                    className="-ml-1 mr-3 h-5 w-5 text-white"
+                    aria-hidden="true"
+                  />
                   Add to Bag
                 </button>
               </form>

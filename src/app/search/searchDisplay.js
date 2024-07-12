@@ -37,6 +37,7 @@ export default function SearchDisplay({
       large,
       medium,
       small,
+      image,
       image1,
       image2,
       image3,

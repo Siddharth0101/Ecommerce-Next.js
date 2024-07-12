@@ -36,6 +36,7 @@ export default function ProductDisplay({
       large,
       medium,
       small,
+      image,
       image1,
       image2,
       image3,
