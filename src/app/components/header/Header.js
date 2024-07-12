@@ -192,7 +192,7 @@ const UserDropdown = () => {
   const isLogged = useSelector((state) => state.token.isLogged);
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("email");
+    localStorage.removeItem("id");
     dispatch(TokenSliceActions.LOGOUT());
     setIsOpen(false);
   };

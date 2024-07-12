@@ -5,7 +5,7 @@ const TokenSlice = createSlice({
   initialState: {
     isLogged: localStorage.getItem("token") ? true : false,
     displayName: "",
-    email: localStorage.getItem("email") || "",
+    id: localStorage.getItem("id") || "",
   },
   reducers: {
     DISPLAYNAME(state, action) {
@@ -16,10 +16,10 @@ const TokenSlice = createSlice({
     },
     LOGOUT(state, action) {
       state.isLogged = false;
-      state.email = "";
+      state.id = "";
     },
-    EMAILID(state, action) {
-      state.email = action.payload;
+    LOCALID(state, action) {
+      state.id = action.payload;
     },
   },
 });
