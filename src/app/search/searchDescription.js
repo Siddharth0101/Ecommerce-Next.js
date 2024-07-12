@@ -4,12 +4,14 @@ import { StarIcon, HeartIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CartSliceActions } from "../store/cartSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export default function SearchDescription() {
+  const dispatch = useDispatch();
   const descriptionData = useSelector((state) => state.description.display);
   const product = {
     id: descriptionData.id,
@@ -83,11 +85,12 @@ export default function SearchDescription() {
         id: product.id,
         title: product.name,
         discountPrice: product.discountPrice,
+        originalPrice: product.originalPrice,
         image: descriptionData.image,
         size: selectedSize.name,
         quantity: quantity,
       };
-      console.log(data);
+      dispatch(CartSliceActions.ADDITEM(data));
     }
   };
 
