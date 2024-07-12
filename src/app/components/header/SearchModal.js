@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchSliceActions } from "@/app/store/searchSlice";
-import SearchCard from "../searchCard/searchCard";
+import SearchCard from "@/app/search/searchCard";
 
 export default function SearchModal({ open, setOpen }) {
   const [searchText, setSearchText] = useState("");

@@ -19,8 +19,8 @@ export default function SearchDisplay({
   const currentPath = usePathname();
   const handleViewClick = (e) => {
     e.preventDefault();
+    router.push(`/search/${title}`);
   };
-
   return (
     <div className="flex justify-center md:justify-start">
       <motion.div
