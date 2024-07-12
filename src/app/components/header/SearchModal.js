@@ -75,7 +75,7 @@ export default function SearchModal({ open, setOpen }) {
             />
           </div>
         </div>
-        <SearchCard />
+        <SearchCard setOpen={setOpen} />
       </DragCloseDrawer>
     </div>
   );

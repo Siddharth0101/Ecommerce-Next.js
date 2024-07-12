@@ -1,3 +1,9 @@
+import SearchDescription from "../searchDescription";
+
 export default function Slug() {
-  return <div>Hello There</div>;
+  return (
+    <div>
+      <SearchDescription />
+    </div>
+  );
 }

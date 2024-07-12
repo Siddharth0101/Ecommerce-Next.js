@@ -13,12 +13,37 @@ export default function SearchDisplay({
   discountedPrice,
   bestsellers,
   ratings,
+  large,
+  medium,
+  small,
+  image1,
+  image2,
+  image3,
+  image4,
+  setOpen,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const currentPath = usePathname();
   const handleViewClick = (e) => {
     e.preventDefault();
+    const data = {
+      title,
+      description,
+      originalPrice,
+      discountedPrice,
+      ratings,
+      bestsellers,
+      large,
+      medium,
+      small,
+      image1,
+      image2,
+      image3,
+      image4,
+    };
+    dispatch(DescriptionSliceAction.DISPLAY(data));
+    setOpen(false);
     router.push(`/search/${title}`);
   };
   return (
