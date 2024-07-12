@@ -6,15 +6,16 @@ import {
   useAnimate,
   motion,
 } from "framer-motion";
+import CartModal from "../cart/cart";
 
 export default function Cart({ open, setOpen }) {
   return (
     <div className="grid place-content-center bg-neutral-950">
       <DragCloseDrawer open={open} setOpen={setOpen}>
         <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
-          <h2 className="text-4xl font-bold text-neutral-200">
-            Drag the handle
-          </h2>
+          <div className="mx-auto max-w-2xl space-y-4 text-neutral-400 ">
+            <CartModal />
+          </div>
         </div>
       </DragCloseDrawer>
     </div>
