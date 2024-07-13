@@ -6,6 +6,9 @@ const CartSlice = createSlice({
     items: [],
   },
   reducers: {
+    REPLACE(state, action) {
+      state.items = action.payload;
+    },
     ADDITEM(state, action) {
       const { id, title, image, discountPrice, originalPrice, size, quantity } =
         action.payload;

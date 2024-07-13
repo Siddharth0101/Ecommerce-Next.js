@@ -3,6 +3,7 @@ import { FiTrash2, FiEdit2 } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 
 export default function CartDisplay({
+  id,
   image,
   title,
   originalPrice,
