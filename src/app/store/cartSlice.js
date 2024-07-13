@@ -6,9 +6,6 @@ const CartSlice = createSlice({
     items: [],
   },
   reducers: {
-    REPLACE(state, action) {
-      state.items = action.payload;
-    },
     ADDITEM(state, action) {
       const { id, title, image, discountPrice, originalPrice, size, quantity } =
         action.payload;
@@ -28,6 +25,21 @@ const CartSlice = createSlice({
           quantity,
         });
       }
+    },
+    EDIT(state, action) {
+      const { id, size, quantity } = action.payload;
+      const existingItemIndex = state.items.findIndex(
+        (item) => item.id === id && item.size === size
+      );
+      if (existingItemIndex !== -1) {
+        state.items[existingItemIndex].quantity = quantity;
+      }
+    },
+    REMOVE(state, action) {
+      const { id, size } = action.payload;
+      state.items = state.items.filter(
+        (item) => !(item.id === id && item.size === size)
+      );
     },
   },
 });

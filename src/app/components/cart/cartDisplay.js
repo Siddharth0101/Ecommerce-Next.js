@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { FiTrash2, FiEdit2 } from "react-icons/fi";
 import { useDispatch } from "react-redux";
+import QuantityModal from "./quantityModal";
+import { CartSliceActions } from "@/app/store/cartSlice";
 
 export default function CartDisplay({
   id,
@@ -9,16 +12,37 @@ export default function CartDisplay({
   originalPrice,
   discountedPrice,
   size,
-  quantity,
+  quantity: initialQuantity,
 }) {
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(initialQuantity);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleRemoveClick = (e) => {
     e.preventDefault();
+    dispatch(CartSliceActions.REMOVE({ id, size }));
+    // Implement your remove item logic here
   };
 
   const handleEditClick = (e) => {
     e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+    dispatch(CartSliceActions.EDIT({ id, size, quantity: quantity + 1 }));
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+      dispatch(CartSliceActions.EDIT({ id, size, quantity: quantity + 1 }));
+    }
   };
 
   return (
@@ -87,6 +111,16 @@ export default function CartDisplay({
           </button>
         </motion.div>
       </motion.div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <QuantityModal
+          initialQuantity={quantity}
+          closeModal={closeModal}
+          increaseQuantity={increaseQuantity}
+          decreaseQuantity={decreaseQuantity}
+        />
+      )}
     </div>
   );
 }
