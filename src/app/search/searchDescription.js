@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon, HeartIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import ImageGallery from "react-image-gallery";
@@ -12,6 +12,8 @@ function classNames(...classes) {
 }
 export default function SearchDescription() {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const userId = useSelector((state) => state.token.id);
   const descriptionData = useSelector((state) => state.description.display);
   const product = {
     id: descriptionData.id,
@@ -97,7 +99,6 @@ export default function SearchDescription() {
   const handleSlide = (index) => {
     console.log("Slid to index", index);
   };
-
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="py-6">

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StarIcon,
   HeartIcon,
@@ -17,6 +17,8 @@ function classNames(...classes) {
 
 export default function ProductDescriptionPage() {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const userId = useSelector((state) => state.token.id);
   const descriptionData = useSelector((state) => state.description.display);
   const product = {
     id: descriptionData.id,
