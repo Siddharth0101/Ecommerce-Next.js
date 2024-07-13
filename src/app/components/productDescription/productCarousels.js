@@ -95,8 +95,10 @@ export default function ProductDescriptionPage() {
         originalPrice: product.originalPrice,
         image: descriptionData.image,
         size: selectedSize.name,
+        stock: selectedSize.inStock,
         quantity: quantity,
       };
+      // console.log(data);
       dispatch(CartSliceActions.ADDITEM(data));
     }
   };

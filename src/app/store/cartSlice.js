@@ -7,13 +7,22 @@ const CartSlice = createSlice({
   },
   reducers: {
     ADDITEM(state, action) {
-      const { id, title, image, discountPrice, originalPrice, size, quantity } =
-        action.payload;
+      const {
+        id,
+        title,
+        image,
+        discountPrice,
+        originalPrice,
+        size,
+        quantity,
+        stock,
+      } = action.payload;
       const existingItemIndex = state.items.findIndex(
         (item) => item.id == id && item.size == size
       );
       if (existingItemIndex != -1) {
         state.items[existingItemIndex].quantity += quantity;
+        state.items[existingItemIndex].stock = stock;
       } else {
         state.items.push({
           id,
@@ -23,16 +32,20 @@ const CartSlice = createSlice({
           originalPrice,
           size,
           quantity,
+          stock,
         });
       }
     },
     EDIT(state, action) {
-      const { id, size, quantity } = action.payload;
+      const { id, size, quantity, stock } = action.payload;
       const existingItemIndex = state.items.findIndex(
         (item) => item.id === id && item.size === size
       );
       if (existingItemIndex !== -1) {
         state.items[existingItemIndex].quantity = quantity;
+        if (stock !== undefined) {
+          state.items[existingItemIndex].stock = stock;
+        }
       }
     },
     REMOVE(state, action) {

@@ -13,6 +13,7 @@ export default function CartDisplay({
   discountedPrice,
   size,
   quantity: initialQuantity,
+  stock,
 }) {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(initialQuantity);
@@ -119,6 +120,7 @@ export default function CartDisplay({
           closeModal={closeModal}
           increaseQuantity={increaseQuantity}
           decreaseQuantity={decreaseQuantity}
+          stock={stock}
         />
       )}
     </div>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function QuantityModal({
@@ -5,7 +6,28 @@ export default function QuantityModal({
   closeModal,
   increaseQuantity,
   decreaseQuantity,
+  stock,
 }) {
+  const [currentQuantity, setCurrentQuantity] = useState(initialQuantity);
+
+  useEffect(() => {
+    setCurrentQuantity(initialQuantity);
+  }, [initialQuantity]);
+
+  const handleIncrease = () => {
+    if (currentQuantity < stock) {
+      setCurrentQuantity(currentQuantity + 1);
+      increaseQuantity();
+    }
+  };
+
+  const handleDecrease = () => {
+    if (currentQuantity > 1) {
+      setCurrentQuantity(currentQuantity - 1);
+      decreaseQuantity();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -17,35 +39,42 @@ export default function QuantityModal({
         initial={{ scale: 0.5, y: "-50%" }}
         animate={{ scale: 1, y: "-50%" }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-lg shadow-lg overflow-hidden w-64"
+        className="bg-white rounded-lg shadow-lg overflow-hidden w-80 md:w-96"
       >
-        <div className="p-4">
-          <h2 className="text-lg font-semibold mb-4">Edit Quantity</h2>
-          <div className="flex items-center justify-between">
+        <div className="p-6">
+          <h2 className="text-xl font-semibold mb-4 text-center">
+            Edit Quantity
+          </h2>
+          <div className="flex items-center justify-center mb-6">
             <button
-              className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600"
-              onClick={decreaseQuantity}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              onClick={handleDecrease}
             >
               -
             </button>
-            <p className="text-xl font-semibold">{initialQuantity}</p>
+            <p className="text-2xl font-semibold mx-4">{currentQuantity}</p>
             <button
-              className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600"
-              onClick={increaseQuantity}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              onClick={handleIncrease}
             >
               +
             </button>
           </div>
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-center space-x-4">
             <button
-              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 mr-2"
+              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
               onClick={closeModal}
             >
               Cancel
             </button>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              className={`px-4 py-2 rounded-lg ${
+                currentQuantity <= stock
+                  ? "bg-blue-500 text-white hover:bg-blue-600"
+                  : "bg-gray-400 text-gray-600 cursor-not-allowed"
+              }`}
               onClick={closeModal}
+              disabled={currentQuantity > stock}
             >
               Save
             </button>
