@@ -83,17 +83,29 @@ export default function SearchDescription() {
   const handleAddToBag = (e) => {
     e.preventDefault();
     if (selectedSize) {
+      let discountPrice = product.discountPrice;
+      let originalPrice = product.originalPrice;
+
+      // Adjust prices based on selected size
+      if (selectedSize.name === "S (250 GM)") {
+        discountPrice = `₹${(descriptionData.discountedPrice / 4).toFixed(2)}`;
+        originalPrice = `₹${(descriptionData.originalPrice / 4).toFixed(2)}`;
+      } else if (selectedSize.name === "M (500 GM)") {
+        discountPrice = `₹${(descriptionData.discountedPrice / 2).toFixed(2)}`;
+        originalPrice = `₹${(descriptionData.originalPrice / 2).toFixed(2)}`;
+      }
+
       const data = {
         id: product.id,
         title: product.name,
-        discountPrice: product.discountPrice,
-        originalPrice: product.originalPrice,
+        discountPrice: discountPrice,
+        originalPrice: originalPrice,
         image: descriptionData.image,
         size: selectedSize.name,
         stock: selectedSize.inStock,
         quantity: quantity,
       };
-      // console.log(data);
+
       dispatch(CartSliceActions.ADDITEM(data));
     }
   };
