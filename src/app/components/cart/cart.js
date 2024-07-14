@@ -6,7 +6,9 @@ export default function CartModal() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const userId = useSelector((state) => state.token.id);
+  const money = useSelector((state) => state.cart.totalAmount);
   console.log(cartItems);
+  console.log(money);
   return (
     <div>
       {cartItems.map((item, index) => (

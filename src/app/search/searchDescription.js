@@ -105,7 +105,6 @@ export default function SearchDescription() {
         stock: selectedSize.inStock,
         quantity: quantity,
       };
-
       dispatch(CartSliceActions.ADDITEM(data));
     }
   };
