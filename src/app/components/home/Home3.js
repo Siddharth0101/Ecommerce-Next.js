@@ -111,9 +111,10 @@ const Home3 = () => {
     <section className="bg-slate-100" ref={ref}>
       <div className="relative overflow-hidden p-4">
         <div className="mx-auto max-w-6xl text-center">
-          <p className="mb-4 text-4xl font-bold text-slate-700">
-            Bestsellers from our store
+          <p className="mb-4 text-4xl font-bold text-white bg-gradient-to-r from-blue-500 to-teal-500 text-center py-2 px-4 rounded-lg shadow-lg">
+            Bestsellers from Our Store
           </p>
+
           {loading ? (
             <p className="text-xl text-slate-500">Loading...</p>
           ) : (
