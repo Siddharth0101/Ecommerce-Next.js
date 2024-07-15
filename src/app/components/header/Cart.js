@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useMeasure from "react-use-measure";
 import {
   useDragControls,
@@ -7,15 +7,43 @@ import {
   motion,
 } from "framer-motion";
 import CartModal from "../cart/cart";
+import { useSelector } from "react-redux";
 
 export default function Cart({ open, setOpen }) {
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+
   return (
     <div className="grid place-content-center bg-neutral-950">
       <DragCloseDrawer open={open} setOpen={setOpen}>
         <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
-          <div className="mx-auto max-w-2xl space-y-4 text-neutral-400 ">
-            <CartModal />
-          </div>
+          {totalAmount === 0 ? (
+            <div className="text-center space-y-4">
+              <h2 className="text-2xl font-semibold text-white">
+                Your cart is empty
+              </h2>
+              <p className="text-neutral-400">
+                Add items from the store to see them here.
+              </p>
+              <button
+                onClick={() => setOpen(false)}
+                className="bg-blue-500 text-white py-2 px-4 rounded"
+              >
+                Go to Store
+              </button>
+            </div>
+          ) : (
+            <>
+              <CartModal />
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-semibold text-white ml-10">
+                  TotalAmount: ₹{totalAmount}
+                </span>
+                <button className="bg-green-500 text-white py-2 px-4 rounded">
+                  Checkout
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </DragCloseDrawer>
     </div>
