@@ -161,9 +161,10 @@ const NavLink = ({ text, href }) => {
 const NavRight = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [openCart, setOpenCart] = useState(false);
+  const coin = useSelector((state) => state.coin.coin);
   return (
     <div className="flex items-center gap-4">
-      <RewardLogo amount="100" />
+      <RewardLogo amount={coin} />
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}

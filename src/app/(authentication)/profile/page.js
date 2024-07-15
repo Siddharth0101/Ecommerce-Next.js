@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Loader from "./loading";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -14,28 +13,42 @@ import {
   faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import StackedNotifications from "@/app/components/alert/alert";
+import { coinsliceAction } from "@/app/store/coinSlice";
+import Loader from "./loading";
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const displayName = useSelector((state) => state.token.displayName);
   const email = useSelector((state) => state.token.email);
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [notification, setNotification] = useState(null);
+  const [clickedIcons, setClickedIcons] = useState({});
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
+
   const removeNotif = () => {
     setNotification(null);
   };
+
   const handleIconClick = (platform) => {
-    setNotification({
-      id: Math.random(),
-      text: `Successfully followed ${platform} and added 100 coins to your wallet.`,
-    });
+    if (!clickedIcons[platform]) {
+      setNotification({
+        id: Math.random(),
+        text: `Successfully followed ${platform} and added 100 coins to your wallet.`,
+      });
+      dispatch(coinsliceAction.COINS(100));
+      setClickedIcons((prevState) => ({
+        ...prevState,
+        [platform]: true,
+      }));
+    }
   };
 
   const handleSave = () => {
@@ -43,7 +56,7 @@ export default function Profile() {
   };
 
   if (isLoading) {
-    // return <Loader />;
+    return <Loader />;
   }
 
   return (
@@ -186,36 +199,43 @@ export default function Profile() {
                 platform="Facebook"
                 icon={faFacebook}
                 onClick={handleIconClick}
+                disabled={clickedIcons.Facebook}
               />
               <SocialIcon
                 platform="Instagram"
                 icon={faInstagram}
                 onClick={handleIconClick}
+                disabled={clickedIcons.Instagram}
               />
               <SocialIcon
                 platform="Discord"
                 icon={faDiscord}
                 onClick={handleIconClick}
+                disabled={clickedIcons.Discord}
               />
               <SocialIcon
                 platform="WhatsApp"
                 icon={faWhatsapp}
                 onClick={handleIconClick}
+                disabled={clickedIcons.WhatsApp}
               />
               <SocialIcon
                 platform="Twitter"
                 icon={faTwitter}
                 onClick={handleIconClick}
+                disabled={clickedIcons.Twitter}
               />
               <SocialIcon
                 platform="LinkedIn"
                 icon={faLinkedin}
                 onClick={handleIconClick}
+                disabled={clickedIcons.LinkedIn}
               />
               <SocialIcon
                 platform="Snapchat"
                 icon={faSnapchat}
                 onClick={handleIconClick}
+                disabled={clickedIcons.Snapchat}
               />
             </motion.div>
             <p className="text-white text-center mt-4 text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-500 p-4 rounded-lg shadow-lg">
@@ -228,24 +248,29 @@ export default function Profile() {
   );
 }
 
-function SocialIcon({ platform, icon, onClick }) {
+function SocialIcon({ platform, icon, onClick, disabled }) {
   const handleClick = () => {
-    onClick(platform);
+    if (!disabled) {
+      onClick(platform);
+    }
   };
 
   return (
     <motion.div
-      className="relative p-2 rounded-full shadow-lg overflow-hidden"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      className={`relative p-2 rounded-full shadow-lg overflow-hidden ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+      whileHover={!disabled ? { scale: 1.05 } : {}}
+      whileTap={!disabled ? { scale: 0.95 } : {}}
       onClick={handleClick}
     >
       <div className="relative bg-gradient-to-r from-purple-400 to-indigo-600 rounded-full group overflow-hidden">
         <FontAwesomeIcon
           icon={icon}
-          className="text-3xl text-white cursor-pointer m-4"
+          className={`text-3xl text-white cursor-pointer m-4 ${
+            disabled ? "cursor-not-allowed" : ""
+          }`}
           title={platform}
-          onClick={handleClick}
         />
         <motion.div
           className="absolute inset-0 bg-blue-900 opacity-0 rounded-full"
