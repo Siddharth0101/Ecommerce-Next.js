@@ -6,6 +6,7 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useDispatch, useSelector } from "react-redux";
 import { CartSliceActions } from "../store/cartSlice";
+import Home3 from "../components/home/Home3";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -404,6 +405,9 @@ export default function SearchDescription() {
               </p>
             </div>
           </div>
+        </div>
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pt-10">
+          <Home3 />
         </div>
       </div>
     </div>

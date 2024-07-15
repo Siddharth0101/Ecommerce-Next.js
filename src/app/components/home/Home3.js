@@ -6,6 +6,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import useMeasure from "react-use-measure";
 import { SearchSliceActions } from "@/app/store/searchSlice";
 import { useRouter } from "next/navigation";
+import { DescriptionSliceAction } from "@/app/store/descriptionSlice";
 
 const CARD_WIDTH = 350;
 const CARD_HEIGHT = 400;
@@ -82,12 +83,29 @@ const Home3 = () => {
   }, [dispatch]);
 
   const handleClick = (item) => {
-    // if (item.title.toLowerCase().includes("almond")) {
-    //   router.push(`/product/almond/${encodeURIComponent(item.title)}`);
-    // } else {
-    //   router.push(`/product/raisins/${encodeURIComponent(item.title)}`);
-    // }
-    console.log(item);
+    const data = {
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      originalPrice: item.originalPrice,
+      discountedPrice: item.discountPrice,
+      ratings: item.ratings,
+      bestsellers: item.bestsellers,
+      large: item.large.quantity,
+      medium: item.medium.quantity,
+      small: item.small.quantity,
+      image: item.image,
+      image1: item.imageView.image1,
+      image2: item.imageView.image2,
+      image3: item.imageView.image3,
+      image4: item.imageView.image4,
+    };
+    dispatch(DescriptionSliceAction.DISPLAY(data));
+    if (item.title.toLowerCase().includes("almond")) {
+      router.push(`/product/almond/${encodeURIComponent(item.title)}`);
+    } else {
+      router.push(`/product/raisins/${encodeURIComponent(item.title)}`);
+    }
   };
   return (
     <section className="bg-slate-100" ref={ref}>
