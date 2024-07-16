@@ -7,7 +7,7 @@ export default function CartModal() {
   const cartItems = useSelector((state) => state.cart.items);
   const userId = useSelector((state) => state.token.id);
 
-  console.log(cartItems);
+  // console.log(cartItems);
 
   return (
     <div>

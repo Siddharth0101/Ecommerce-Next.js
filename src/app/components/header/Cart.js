@@ -8,8 +8,14 @@ import {
 } from "framer-motion";
 import CartModal from "../cart/cart";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Cart({ open, setOpen }) {
+  const router = useRouter();
+  const storeHandler = () => {
+    router.push("/product/almond");
+    setOpen(false);
+  };
   const totalAmount = useSelector((state) => state.cart.totalAmount);
 
   return (
@@ -25,7 +31,7 @@ export default function Cart({ open, setOpen }) {
                 Add items from the store to see them here.
               </p>
               <button
-                onClick={() => setOpen(false)}
+                onClick={storeHandler}
                 className="bg-blue-500 text-white py-2 px-4 rounded"
               >
                 Go to Store

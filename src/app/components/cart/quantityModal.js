@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 export default function QuantityModal({
   initialQuantity,
   closeModal,
-  increaseQuantity,
-  decreaseQuantity,
+  handleSave,
   stock,
 }) {
   const [currentQuantity, setCurrentQuantity] = useState(initialQuantity);
@@ -17,15 +16,17 @@ export default function QuantityModal({
   const handleIncrease = () => {
     if (currentQuantity < stock) {
       setCurrentQuantity(currentQuantity + 1);
-      increaseQuantity();
     }
   };
 
   const handleDecrease = () => {
     if (currentQuantity > 1) {
       setCurrentQuantity(currentQuantity - 1);
-      decreaseQuantity();
     }
+  };
+
+  const saveChanges = () => {
+    handleSave(currentQuantity);
   };
 
   return (
@@ -73,7 +74,7 @@ export default function QuantityModal({
                   ? "bg-blue-500 text-white hover:bg-blue-600"
                   : "bg-gray-400 text-gray-600 cursor-not-allowed"
               }`}
-              onClick={closeModal}
+              onClick={saveChanges}
               disabled={currentQuantity > stock}
             >
               Save

@@ -16,13 +16,11 @@ export default function CartDisplay({
   stock,
 }) {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(initialQuantity);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleRemoveClick = (e) => {
     e.preventDefault();
     dispatch(CartSliceActions.REMOVE({ id, size }));
-    // Implement your remove item logic here
   };
 
   const handleEditClick = (e) => {
@@ -34,16 +32,9 @@ export default function CartDisplay({
     setIsModalOpen(false);
   };
 
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-    dispatch(CartSliceActions.EDIT({ id, size, quantity: quantity + 1 }));
-  };
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-      dispatch(CartSliceActions.EDIT({ id, size, quantity: quantity + 1 }));
-    }
+  const handleSave = (newQuantity) => {
+    dispatch(CartSliceActions.EDIT({ id, size, quantity: newQuantity }));
+    closeModal();
   };
 
   return (
@@ -88,7 +79,7 @@ export default function CartDisplay({
             </p>
           </div>
           <p className="text-sm text-gray-600 mb-2">Size: {size}</p>
-          <p className="text-sm text-gray-600">Quantity: {quantity}</p>
+          <p className="text-sm text-gray-600">Quantity: {initialQuantity}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -113,13 +104,11 @@ export default function CartDisplay({
         </motion.div>
       </motion.div>
 
-      {/* Modal */}
       {isModalOpen && (
         <QuantityModal
-          initialQuantity={quantity}
+          initialQuantity={initialQuantity}
           closeModal={closeModal}
-          increaseQuantity={increaseQuantity}
-          decreaseQuantity={decreaseQuantity}
+          handleSave={handleSave}
           stock={stock}
         />
       )}
