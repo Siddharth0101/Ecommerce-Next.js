@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Loader from "./loading";
+import { FiftyFiftyHero } from "./contactContent";
 export default function Contact() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,5 +15,9 @@ export default function Contact() {
   if (isLoading) {
     return <Loader />;
   }
-  return <div>Contact Page</div>;
+  return (
+    <div>
+      <FiftyFiftyHero />
+    </div>
+  );
 }

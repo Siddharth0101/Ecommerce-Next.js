@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Loader from "./loading";
+import ModernCarousel from "./aboutContact";
 
 export default function About() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,5 +16,9 @@ export default function About() {
   if (isLoading) {
     return <Loader />;
   }
-  return <div>About Page</div>;
+  return (
+    <div>
+      <ModernCarousel />
+    </div>
+  );
 }
