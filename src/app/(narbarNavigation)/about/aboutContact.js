@@ -107,18 +107,15 @@ const titleVariants = {
 
 const images = [
   {
-    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bW91bnRhaW5zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    title: "A Title",
+    src: "https://www.stunningmesh.com/wp-content/uploads/Impressive-About-Us-Page.jpg",
     id: 1,
   },
   {
-    src: "https://images.unsplash.com/photo-1637141816287-4a55cfeecda2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-    title: "Another Title",
+    src: "https://th.bing.com/th/id/OIP._bfd1oDnHV0ZGSxM8Crm0AHaD5?rs=1&pid=ImgDetMain",
     id: 2,
   },
   {
-    src: "https://images.unsplash.com/photo-1633774712811-53b489597e78?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
-    title: "And Another",
+    src: "https://st2.depositphotos.com/3591429/10464/i/950/depositphotos_104648666-stock-photo-group-of-people-brainstorming-on.jpg",
     id: 3,
   },
 ];

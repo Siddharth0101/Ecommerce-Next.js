@@ -307,6 +307,12 @@ const iconVariants = {
 };
 
 const NavMenu = ({ isOpen }) => {
+  const [storeOpen, setStoreOpen] = useState(false);
+
+  const toggleStoreDropdown = () => {
+    setStoreOpen((prev) => !prev);
+  };
+
   return (
     <motion.div
       variants={menuVariants}
@@ -315,20 +321,29 @@ const NavMenu = ({ isOpen }) => {
       className="absolute p-4 bg-white shadow-lg left-0 right-0 top-full origin-top flex flex-col gap-4"
     >
       <MenuLink text="Home" href="/" />
-      <MenuLink text="Store" href="#" />
+      <div className="relative">
+        <MenuLink text="Store" href="#" onClick={toggleStoreDropdown} />
+        <AnimatePresence>
+          {storeOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
+            >
+              <StoreDropdown />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
       <MenuLink text="About Us" href="/about" />
       <MenuLink text="Contact Us" href="/contact" />
     </motion.div>
   );
 };
 
-const MenuLink = ({ text, href }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
-
+const MenuLink = ({ text, href, onClick }) => {
   return (
     <div className="relative">
       <Link
@@ -336,8 +351,7 @@ const MenuLink = ({ text, href }) => {
         rel="nofollow"
         href={href || "#"}
         className="h-[30px] overflow-hidden font-medium text-lg flex items-start gap-2"
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
+        onClick={onClick}
       >
         <motion.span variants={menuLinkArrowVariants}>
           <FiArrowRight className="h-[30px] text-gray-950" />
@@ -351,19 +365,6 @@ const MenuLink = ({ text, href }) => {
           </span>
         </motion.div>
       </Link>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-          className="absolute mt-2 bg-white border border-gray-200 shadow-lg rounded-md py-2 w-48 z-10"
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => setIsOpen(false)}
-        >
-          <StoreDropdown />
-        </motion.div>
-      )}
     </div>
   );
 };
