@@ -11,12 +11,18 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
 export default function Cart({ open, setOpen }) {
+  const coin = useSelector((state) => state.coin.coin);
+  console.log(coin);
   const router = useRouter();
   const storeHandler = () => {
     router.push("/product/almond");
     setOpen(false);
   };
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+
+  // Calculate discount and updated total amount
+  const discount = Math.floor(coin / 100) * 10;
+  const updatedTotalAmount = totalAmount - discount;
 
   return (
     <div className="grid place-content-center bg-neutral-950">
@@ -40,10 +46,27 @@ export default function Cart({ open, setOpen }) {
           ) : (
             <>
               <CartModal />
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold text-white ml-10">
-                  TotalAmount: ₹{totalAmount}
-                </span>
+              <div className="flex flex-col items-center space-y-4">
+                <div className="text-lg font-semibold text-white">
+                  <span>TotalAmount: </span>
+                  {discount > 0 && (
+                    <>
+                      <span className="line-through text-red-500 ml-2">
+                        ₹{totalAmount}
+                      </span>
+                      <span className="ml-2">₹{updatedTotalAmount}</span>
+                    </>
+                  )}
+                  {discount === 0 && (
+                    <span className="ml-2">₹{totalAmount}</span>
+                  )}
+                </div>
+                {discount > 0 && (
+                  <div className="text-sm text-neutral-400 ml-6">
+                    You have {coin} coins, which gives you a discount of ₹
+                    {discount} (100 coins = ₹10 discount).
+                  </div>
+                )}
                 <button className="bg-green-500 text-white py-2 px-4 rounded">
                   Checkout
                 </button>
