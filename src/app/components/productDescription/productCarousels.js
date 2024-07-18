@@ -11,7 +11,8 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { useDispatch, useSelector } from "react-redux";
 import { CartSliceActions } from "@/app/store/cartSlice";
 import Home3 from "../home/Home3";
-
+import { AnimatePresence } from "framer-motion";
+import StackedNotifications from "../alert/alert";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -69,7 +70,7 @@ export default function ProductDescriptionPage() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false);
-
+  const [notification, setNotification] = useState(null);
   const toggleWishlist = () => {
     setIsInWishlist((prev) => !prev);
   };
@@ -92,7 +93,6 @@ export default function ProductDescriptionPage() {
       let discountPrice = product.discountPrice;
       let originalPrice = product.originalPrice;
 
-      // Adjust prices based on selected size
       if (selectedSize.name === "S (250 GM)") {
         discountPrice = `₹${(descriptionData.discountedPrice / 4).toFixed(2)}`;
         originalPrice = `₹${(descriptionData.originalPrice / 4).toFixed(2)}`;
@@ -113,14 +113,25 @@ export default function ProductDescriptionPage() {
       };
 
       dispatch(CartSliceActions.ADDITEM(data));
+      setNotification({
+        id: Date.now(),
+        text: `${quantity} ${selectedSize.name} added to cart.`,
+      });
     }
   };
 
   const handleSlide = (index) => {
     console.log("Slid to index", index);
   };
+  const removeNotif = (id) => {
+    setNotification(null);
+  };
   return (
     <div className="bg-gray-100 min-h-screen">
+      <StackedNotifications
+        notification={notification}
+        removeNotif={removeNotif}
+      />
       <div className="py-6">
         {/* Image gallery */}
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">

@@ -7,6 +7,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { useDispatch, useSelector } from "react-redux";
 import { CartSliceActions } from "../store/cartSlice";
 import Home3 from "../components/home/Home3";
+import StackedNotifications from "../components/alert/alert";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -64,7 +65,7 @@ export default function SearchDescription() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false);
-
+  const [notification, setNotification] = useState(null);
   const toggleWishlist = () => {
     setIsInWishlist((prev) => !prev);
   };
@@ -107,14 +108,25 @@ export default function SearchDescription() {
         quantity: quantity,
       };
       dispatch(CartSliceActions.ADDITEM(data));
+      setNotification({
+        id: Date.now(),
+        text: `${quantity} ${selectedSize.name} added to cart.`,
+      });
     }
   };
 
   const handleSlide = (index) => {
     console.log("Slid to index", index);
   };
+  const removeNotif = (id) => {
+    setNotification(null);
+  };
   return (
     <div className="bg-gray-100 min-h-screen">
+      <StackedNotifications
+        notification={notification}
+        removeNotif={removeNotif}
+      />
       <div className="py-6">
         {/* Image gallery */}
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
