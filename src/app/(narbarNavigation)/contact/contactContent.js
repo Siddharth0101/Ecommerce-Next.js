@@ -23,8 +23,8 @@ const Left = () => (
   <div className="col-span-12 flex flex-col justify-between border-r border-neutral-700 md:col-span-6">
     <div className="px-6 py-20 md:px-12 md:py-24">
       <h1 className="text-4xl uppercase leading-tight md:text-5xl md:leading-tight">
-        <span className="text-emerald-300">Zero stress </span>
-        funnels for Ecommerce
+        <span className="text-emerald-300">Zero Stress </span>
+        Funnels for E-Commerce
       </h1>
     </div>
     <BeamInput />
@@ -53,7 +53,7 @@ const BeamInput = () => {
     >
       <input
         type="email"
-        placeholder="Enter your email for a launch discount 🚀"
+        placeholder="Enter your email for exclusive updates 🚀"
         className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-0"
       />
 
@@ -245,11 +245,11 @@ const CONTENT = [
     content: (
       <>
         <p>
-          <span className="text-white">Hey, we're ABC 👋</span>{" "}
+          <span className="text-white">Hello from Earthy Nuts 👋</span>{" "}
           <a href="#" className="text-emerald-300 hover:underline">
-            We do XYZ{" "}
+            We specialize in premium nuts{" "}
           </a>
-          for small ecomm businesses.
+          for boutique e-commerce businesses.
         </p>
       </>
     ),
@@ -258,23 +258,12 @@ const CONTENT = [
     content: (
       <>
         <p>
-          We're working on building out our{" "}
-          <span className="text-white">revolutionary</span> new platform.
+          We're excited to introduce our{" "}
+          <span className="text-white">innovative</span> new platform.
         </p>
         <p>
-          We'd love to hear from you to make sure what we're building will fix
-          your problems.
-        </p>
-      </>
-    ),
-  },
-  {
-    content: (
-      <>
-        <p>
-          We integrate directly with <span className="text-white">Shopify</span>{" "}
-          <SiShopify className="inline text-green-400" /> in a single click. No
-          crazy setup in walkthrough needed.
+          Your feedback is invaluable to us. Let us know how we can tailor our
+          solution to meet your needs.
         </p>
       </>
     ),
@@ -283,10 +272,21 @@ const CONTENT = [
     content: (
       <>
         <p>
-          <span className="text-white">Sound cool?</span> Join the waitlist{" "}
+          Seamlessly integrate with <span className="text-white">Shopify</span>{" "}
+          <SiShopify className="inline text-green-400" /> in just one click. No
+          complex setup required.
+        </p>
+      </>
+    ),
+  },
+  {
+    content: (
+      <>
+        <p>
+          <span className="text-white">Excited?</span> Join our waitlist{" "}
           <span className="hidden md:inline">to your left</span>
           <span className="inline md:hidden">above</span> for updates and a
-          discount when we launch 🚀
+          special discount when we launch 🚀
         </p>
       </>
     ),
