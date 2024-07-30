@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Loading from "./loading";
@@ -13,6 +14,7 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -23,25 +25,30 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
   const removeNotif = () => {
     setNotification(null);
   };
+
   const loginHandler = async (e) => {
     e.preventDefault();
+
     if (emailRef.current.value === "") {
       setNotification({
-        id: Math.random(),
+        id: Date.now(), // Using Date.now() for unique ID
         text: "Email field is empty",
       });
       return;
     }
+
     if (passwordRef.current.value === "") {
       setNotification({
-        id: Math.random(),
+        id: Date.now(),
         text: "Password field is empty",
       });
       return;
     }
+
     try {
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDxycgQJ4R3MwnpWkQRpV-tkmBmApAPuCA",
@@ -53,20 +60,23 @@ const Login = () => {
           body: JSON.stringify({
             email: emailRef.current.value,
             password: passwordRef.current.value,
+            returnSecureToken: true, // Make sure to request a secure token
           }),
         }
       );
+
       const responseData = await response.json();
 
       if (!response.ok) {
-        if (response.status === 400) {
-          setNotification({
-            id: Math.random(),
-            text: "Wrong credentials. Please check your email and password.",
-          });
-        }
+        const errorMessage =
+          responseData.error?.message || "Unknown error occurred.";
+        setNotification({
+          id: Date.now(),
+          text: `Error: ${errorMessage}`,
+        });
         return;
       }
+
       localStorage.setItem("id", responseData.localId);
       dispatch(TokenSliceActions.LOCALID(responseData.localId));
       dispatch(TokenSliceActions.DISPLAYNAME(responseData.displayName));
@@ -74,13 +84,14 @@ const Login = () => {
       localStorage.setItem("token", responseData.idToken);
 
       setNotification({
-        id: Math.random(),
+        id: Date.now(),
         text: "Login successful! Welcome back.",
       });
     } catch (error) {
+      console.error(error);
       setNotification({
-        id: Math.random(),
-        text: "Something went wrong.",
+        id: Date.now(),
+        text: "Something went wrong. Please try again.",
       });
     }
   };
@@ -111,12 +122,12 @@ const Login = () => {
         >
           Sign in to your account
         </p>
-        <form method="POST" action="#" className="space-y-6">
+        <form className="space-y-6" onSubmit={loginHandler}>
           <div className="relative">
             <input
               placeholder="john@example.com"
               className="peer h-10 w-full border-b-2 border-gray-300 text-white bg-transparent placeholder-transparent focus:outline-none focus:border-purple-500"
-              required=""
+              required
               id="email"
               name="email"
               type="email"
@@ -133,7 +144,7 @@ const Login = () => {
             <input
               placeholder="Password"
               className="peer h-10 w-full border-b-2 border-gray-300 text-white bg-transparent placeholder-transparent focus:outline-none focus:border-purple-500"
-              required=""
+              required
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
@@ -210,13 +221,12 @@ const Login = () => {
           <button
             className="w-full py-2 px-4 bg-purple-500 hover:bg-purple-700 rounded-md shadow-lg text-white font-semibold transition duration-200"
             type="submit"
-            onClick={loginHandler}
           >
             Log In
           </button>
         </form>
         <div className="text-center text-gray-300">
-          Don't have an account?
+          Don't have an account?{" "}
           <Link className="text-purple-300 hover:underline" href="/register">
             Register
           </Link>
